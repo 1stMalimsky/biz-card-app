@@ -168,27 +168,7 @@ const MuiNavbar = () => {
                   key={"miniLinks" + page.url}
                   onClick={handleCloseNavMenu}
                   {...page}
-                >
-                  {/*  {({ isActive }) => (
-                    <Typography
-                      sx={{
-                        textAlign: "center",
-                        px: 5,
-                      }}
-                      color={
-                        isActive
-                          ? isDarkTheme
-                            ? "warning.dark"
-                            : "secondary.dark"
-                          : isDarkTheme
-                          ? "warning.light"
-                          : "white"
-                      }
-                    >
-                      {page.label}
-                    </Typography>
-                  )} */}
-                </NavLinkComponent>
+                ></NavLinkComponent>
               ))}
             </Menu>
           </Box>
