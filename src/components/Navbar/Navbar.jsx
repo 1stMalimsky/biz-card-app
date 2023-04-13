@@ -9,14 +9,13 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import MenuItem from "@mui/material/MenuItem";
-import { Switch } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import SearchPartial from "./SearchPartial";
 import ROUTES from "../../routes/ROUTES";
 import { darkThemeActions } from "../../store/darkTheme";
 import NavLinkComponent from "./NavLinkComponent";
 import { authActions } from "../../store/auth";
+import MiniMenuNavLink from "./MiniMenuNavLink";
 import logoImg from "../../newBizLogo.png";
 
 // access to all
@@ -94,7 +93,6 @@ const MuiNavbar = () => {
           <NavLink to={ROUTES.HOME}>
             <img src={logoImg} alt="logo" className="logoImg" />
           </NavLink>
-
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <NavLinkComponent key={page.url} {...page} />
@@ -122,12 +120,10 @@ const MuiNavbar = () => {
               p: 1,
             }}
           >
-            <IconButton>
+            <IconButton onClick={changeTheme}>
               <DarkModeIcon
                 fontSize={"large"}
                 color={isDarkTheme ? "white" : "black"}
-                //sx={{ display: { xs: "none", md: "inline" } }}
-                onClick={changeTheme}
               />
             </IconButton>
           </Box>
@@ -162,14 +158,32 @@ const MuiNavbar = () => {
               }}
             >
               {pages.map((page) => (
-                <NavLinkComponent
+                <MiniMenuNavLink
                   to={page.url}
-                  className={"navLink"}
                   key={"miniLinks" + page.url}
                   onClick={handleCloseNavMenu}
                   {...page}
-                ></NavLinkComponent>
+                ></MiniMenuNavLink>
               ))}
+              {isLoggedIn
+                ? authedPages.map((page) =>
+                    page.url === ROUTES.LOGOUT ? (
+                      <MiniMenuNavLink
+                        key={"miniLinks" + page.url}
+                        {...page}
+                        onClick={handleLogoutClick}
+                      />
+                    ) : (
+                      <MiniMenuNavLink key={"miniLinks" + page.url} {...page} />
+                    )
+                  )
+                : notAuthPages.map((page) => (
+                    <MiniMenuNavLink
+                      key={"miniLinks" + page.url}
+                      {...page}
+                      onClick={handleCloseNavMenu}
+                    />
+                  ))}
             </Menu>
           </Box>
         </Toolbar>
