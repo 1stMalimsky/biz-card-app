@@ -5,11 +5,10 @@ import Box from "@mui/material/Box";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import SearchPartial from "./SearchPartial";
 import ROUTES from "../../routes/ROUTES";
 import { darkThemeActions } from "../../store/darkTheme";
@@ -17,6 +16,8 @@ import NavLinkComponent from "./NavLinkComponent";
 import { authActions } from "../../store/auth";
 import MiniMenuNavLink from "./MiniMenuNavLink";
 import logoImg from "../../newBizLogo.png";
+import { Avatar } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 // access to all
 const pages = [
@@ -25,7 +26,6 @@ const pages = [
     url: ROUTES.HOME,
   },
 ];
-
 //not logged in users
 const notAuthPages = [
   {
@@ -37,11 +37,10 @@ const notAuthPages = [
     url: ROUTES.LOGIN,
   },
 ];
-
 //logged in users
-const authedPages = [
+const loggedInPages = [
   {
-    label: "PROFILE",
+    label: "FAV CARDS",
     url: ROUTES.PROFILE,
   },
   {
@@ -49,9 +48,8 @@ const authedPages = [
     url: ROUTES.LOGOUT,
   },
 ];
-
 //admin/biz pages
-const adminBizPages = [
+const bizPages = [
   {
     label: "CREATE",
     url: ROUTES.REGISTER,
@@ -98,7 +96,7 @@ const MuiNavbar = () => {
               <NavLinkComponent key={page.url} {...page} />
             ))}
             {isLoggedIn
-              ? authedPages.map((page) =>
+              ? loggedInPages.map((page) =>
                   page.url === ROUTES.LOGOUT ? (
                     <NavLinkComponent
                       key={page.url}
@@ -127,7 +125,11 @@ const MuiNavbar = () => {
               />
             </IconButton>
           </Box>
-          {/* hamburger with menu */}
+          <NavLink to={ROUTES.PROFILE}>
+            <IconButton>
+              <AccountCircleIcon />
+            </IconButton>
+          </NavLink>
           <Box
             sx={{
               flexGrow: 1,
@@ -165,8 +167,8 @@ const MuiNavbar = () => {
                   {...page}
                 ></MiniMenuNavLink>
               ))}
-              {isLoggedIn
-                ? authedPages.map((page) =>
+              {isLoggedIn.isAdmin
+                ? loggedInPages.map((page) =>
                     page.url === ROUTES.LOGOUT ? (
                       <MiniMenuNavLink
                         key={"miniLinks" + page.url}
