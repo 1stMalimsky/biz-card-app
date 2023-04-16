@@ -1,10 +1,8 @@
 import { Box, CircularProgress, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import CardComponent from "../components/CardComponent";
-import ButtonComponent from "../components/ButtonComponent";
 import { toast } from "react-toastify";
 import useQueryParams from "../hooks/useQueryParams";
 import { useSelector } from "react-redux";
@@ -15,7 +13,6 @@ const HomePage = () => {
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
-
   useEffect(() => {
     /*
       useEffect cant handle async ()=>{}
@@ -24,14 +21,13 @@ const HomePage = () => {
     axios
       .get("/cards/cards")
       .then(({ data }) => {
-        //console.log("data", data);
+        console.log("data", data);
         // setCardsArr(data);
         filterFunc(data);
       })
       .catch((err) => {
         console.log("err from axios", err);
-
-        toast.error("Oops");
+        toast.error("Oops! Couldn't load your cards. Please try again");
       });
   }, []);
   const filterFunc = (data) => {
@@ -64,9 +60,6 @@ const HomePage = () => {
     filterFunc();
   }, [qparams.filter]);
   const handleDeleteFromInitialCardsArr = async (id) => {
-    // let newCardsArr = JSON.parse(JSON.stringify(cardsArr));
-    // newCardsArr = newCardsArr.filter((item) => item.id != id);
-    // setCardsArr(newCardsArr);
     try {
       await axios.delete("/cards/" + id); // /cards/:id
       setCardsArr((newCardsArr) =>
@@ -77,7 +70,11 @@ const HomePage = () => {
     }
   };
   const handleEditFromInitialCardsArr = (id) => {
-    navigate(`/edit/${id}`); //localhost:3000/edit/123213
+    navigate(`/edit/${id}`);
+  };
+
+  const handleCallBtnClick = () => {
+    toast.success("The call function is coming soon!");
   };
 
   if (!cardsArr) {
@@ -86,18 +83,26 @@ const HomePage = () => {
 
   return (
     <Box>
-      <Grid container spacing={2}>
+      <Grid container>
         {cardsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
             <CardComponent
               id={item._id}
+              user_id={item.user_id}
               title={item.title}
               subTitle={item.subTitle}
-              description={item.description}
+              phone={item.phone}
+              address={item.street + " " + item.houseNumber + " " + item.city}
+              bizNumber={item.bizNumber}
               img={item.image ? item.image.url : ""}
               onDelete={handleDeleteFromInitialCardsArr}
               onEdit={handleEditFromInitialCardsArr}
-              canEdit={payload && (payload.biz || payload.isAdmin)}
+              bizControls={
+                payload && payload.biz && payload._id == item.user_id
+              }
+              adminControls={payload && payload.isAdmin}
+              onCallClick={handleCallBtnClick}
+              currentUser={payload && payload._id}
             />
           </Grid>
         ))}
@@ -105,30 +110,5 @@ const HomePage = () => {
     </Box>
   );
 };
-
-/*
-  <CardComponent
-              id={item.id}
-              title={item.title}
-              price={item.price}
-              ----
-              onDelete={handleDeleteFromInitialCardsArr}
-              onEdit={handleEditFromInitialCardsArr}
-            />
-  component 1:
-    <CardComponent
-              id={1}
-              ----
-              onDelete={handleDeleteFromInitialCardsArr}
-              onEdit={handleEditFromInitialCardsArr}
-            />
-  component 2:
-    <CardComponent
-              id={2}
-              ----
-              onDelete={handleDeleteFromInitialCardsArr}
-              onEdit={handleEditFromInitialCardsArr}
-            />
-*/
 
 export default HomePage;

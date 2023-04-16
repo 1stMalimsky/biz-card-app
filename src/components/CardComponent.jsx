@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+import PropTypes from "prop-types";
 import {
   Card,
   CardActionArea,
@@ -6,20 +8,28 @@ import {
   CardContent,
   Typography,
   CardActions,
-  Button,
+  Divider,
+  IconButton,
 } from "@mui/material";
-import PropTypes from "prop-types";
-import { Fragment } from "react";
+import CallIcon from "@mui/icons-material/Call";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const CardComponent = ({
   img,
   title,
   subTitle,
-  description,
+  phone,
+  address,
+  bizNumber,
   id,
+  user_id,
   onDelete,
   onEdit,
-  canEdit,
+  bizControls,
+  adminControls,
+  onCallClick,
+  currentUser,
 }) => {
   const handleDeleteBtnClick = () => {
     console.log("id", id);
@@ -28,31 +38,50 @@ const CardComponent = ({
   const handleEditBtnClick = () => {
     onEdit(id);
   };
+
+  const handleCallBtnClick = () => {
+    onCallClick();
+  };
   return (
-    <Card square raised sx={{ width: 350, mt: 2 }}>
+    <Card square raised sx={{ width: 275, mt: 2 }}>
       <CardActionArea>
         <CardMedia
           component="img"
           image={img}
-          sx={{ width: 350, height: 250 }}
+          sx={{ maxWidth: 275, maxheight: 150 }}
         />
       </CardActionArea>
       <CardHeader title={title} subheader={subTitle}></CardHeader>
+      <Divider variant="middle" />
       <CardContent>
-        <Typography>{description}</Typography>
+        <Typography>Phone: {phone}</Typography>
+        <Typography>Address: {address}</Typography>
+        <Typography>Card Number: {bizNumber}</Typography>
       </CardContent>
       <CardActions>
-        <Button variant="text" color="primary">
-          Buy now
-        </Button>
-        {canEdit ? (
+        <IconButton onClick={handleCallBtnClick}>
+          <CallIcon />
+        </IconButton>
+        {adminControls ? (
           <Fragment>
-            <Button variant="text" color="error" onClick={handleDeleteBtnClick}>
-              Delete
-            </Button>
-            <Button variant="text" color="warning" onClick={handleEditBtnClick}>
-              Edit
-            </Button>
+            <IconButton
+              onClick={handleEditBtnClick}
+              sx={{ display: currentUser == user_id ? "block" : "none" }}
+            >
+              <EditIcon />
+            </IconButton>
+            <IconButton onClick={handleDeleteBtnClick}>
+              <DeleteIcon />
+            </IconButton>
+          </Fragment>
+        ) : bizControls ? (
+          <Fragment>
+            <IconButton onClick={handleEditBtnClick}>
+              <EditIcon />
+            </IconButton>
+            <IconButton onClick={handleDeleteBtnClick}>
+              <DeleteIcon />
+            </IconButton>
           </Fragment>
         ) : (
           ""
@@ -67,10 +96,13 @@ CardComponent.propTypes = {
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+  bizNumber: PropTypes.string.isRequired,
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
   canEdit: PropTypes.bool,
+  onCallClick: PropTypes.func,
 };
 
 CardComponent.defaultProps = {

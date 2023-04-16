@@ -4,21 +4,18 @@ import RegisterPage from "../pages/RegisterPage";
 import ROUTES from "./ROUTES";
 import LoginPage from "../pages/LoginPage";
 import EditCardPage from "../pages/EditCardPage";
-import ReRenderPage from "../pages/ReRenderPage/ReRenderPage";
-import UseMemoPage from "../pages/ReRenderPage/UseMemoPage";
-import RP1 from "../pages/RP1";
-import RP2 from "../pages/RP2";
 import ProtectedRoute from "../components/ProtectedRoute";
 import ProfilePage from "../pages/ProfilePage";
 import TkProtectedRoutes from "../components/TkProtectedRoutes";
 import AddNewCardPage from "../pages/AddNewCardPage";
 import LogoutLink from "../components/LogoutLink";
-import { element } from "prop-types";
 
 const Router = () => {
   return (
     <Routes>
       <Route path={ROUTES.HOME} element={<HomePage />} />
+      <Route path={ROUTES.ABOUT} element={<h1>About Us</h1>} />
+      <Route path={ROUTES.FAVCARDS} element={<h1>FavCards</h1>} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route
@@ -45,11 +42,8 @@ const Router = () => {
           />
         }
       />
-
-      <Route path="/rrp" element={<ReRenderPage />} />
-      <Route path="/usememo" element={<UseMemoPage />} />
-      <Route path="/rp1" element={<RP1 />} />
-      <Route path="/rp2" element={<RP2 />} />
+      <Route path={ROUTES.MYCARDS} element={<h1>My Cards</h1>} />
+      <Route path={ROUTES.SANDBOX} element={<h1>Sandbox</h1>} />
       <Route
         path={ROUTES.LOGOUT}
         element={<ProtectedRoute element={<LogoutLink />} />}

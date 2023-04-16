@@ -16,7 +16,6 @@ import NavLinkComponent from "./NavLinkComponent";
 import { authActions } from "../../store/auth";
 import MiniMenuNavLink from "./MiniMenuNavLink";
 import logoImg from "../../newBizLogo.png";
-import { Avatar } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 // access to all
@@ -24,6 +23,10 @@ const pages = [
   {
     label: "HOME",
     url: ROUTES.HOME,
+  },
+  {
+    label: "ABOUT",
+    url: ROUTES.ABOUT,
   },
 ];
 //not logged in users
@@ -41,25 +44,27 @@ const notAuthPages = [
 const loggedInPages = [
   {
     label: "FAV CARDS",
-    url: ROUTES.PROFILE,
+    url: ROUTES.FAVCARDS,
   },
   {
     label: "LOGOUT",
     url: ROUTES.LOGOUT,
   },
 ];
-//admin/biz pages
+//biz pages
 const bizPages = [
   {
-    label: "CREATE",
-    url: ROUTES.REGISTER,
+    label: "MY CARDS",
+    url: ROUTES.MYCARDS,
   },
 ];
+//admin pages
+const adminPages = [{ label: "SANDBOX", url: ROUTES.SANDBOX }];
 
 const MuiNavbar = () => {
-  const isLoggedIn = useSelector(
-    (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
-  );
+  const isLoggedIn = useSelector((bigState) => bigState.authSlice.isLoggedIn);
+  const userDetails = useSelector((bigState) => bigState.authSlice.payload);
+  console.log(userDetails);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const dispatch = useDispatch();
   const isDarkTheme = useSelector(
@@ -79,7 +84,6 @@ const MuiNavbar = () => {
   };
 
   const handleLogoutClick = () => {
-    console.log("here");
     localStorage.clear();
     dispatch(authActions.logout());
   };
@@ -95,21 +99,24 @@ const MuiNavbar = () => {
             {pages.map((page) => (
               <NavLinkComponent key={page.url} {...page} />
             ))}
-            {isLoggedIn
-              ? loggedInPages.map((page) =>
-                  page.url === ROUTES.LOGOUT ? (
-                    <NavLinkComponent
-                      key={page.url}
-                      {...page}
-                      onClick={handleLogoutClick}
-                    />
-                  ) : (
-                    <NavLinkComponent key={page.url} {...page} />
-                  )
-                )
-              : notAuthPages.map((page) => (
-                  <NavLinkComponent key={page.url} {...page} />
-                ))}
+            {isLoggedIn ? (
+              <NavLinkComponent
+                key={loggedInPages[0].url}
+                {...loggedInPages[0]}
+              />
+            ) : (
+              ""
+            )}
+            {userDetails && userDetails.biz ? (
+              <NavLinkComponent key={bizPages.url} {...bizPages[0]} />
+            ) : (
+              ""
+            )}
+            {userDetails && userDetails.isAdmin ? (
+              <NavLinkComponent key={adminPages.url} {...adminPages[0]} />
+            ) : (
+              ""
+            )}
           </Box>
           <SearchPartial />
           <Box
@@ -125,11 +132,26 @@ const MuiNavbar = () => {
               />
             </IconButton>
           </Box>
-          <NavLink to={ROUTES.PROFILE}>
-            <IconButton>
-              <AccountCircleIcon />
-            </IconButton>
-          </NavLink>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            {isLoggedIn ? (
+              <NavLinkComponent
+                key={loggedInPages[1].url}
+                {...loggedInPages[1]}
+                onClick={handleLogoutClick}
+              />
+            ) : (
+              notAuthPages.map((page) => (
+                <NavLinkComponent key={page.url} {...page} />
+              ))
+            )}
+          </Box>
+          {isLoggedIn ? (
+            <NavLink to={ROUTES.PROFILE}>
+              <IconButton>
+                <AccountCircleIcon fontSize={"large"} />
+              </IconButton>
+            </NavLink>
+          ) : null}
           <Box
             sx={{
               flexGrow: 1,
@@ -167,7 +189,23 @@ const MuiNavbar = () => {
                   {...page}
                 ></MiniMenuNavLink>
               ))}
-              {isLoggedIn.isAdmin
+              {userDetails && userDetails.biz ? (
+                <MiniMenuNavLink
+                  key={"bizMiniLinks" + bizPages.url}
+                  {...bizPages[0]}
+                />
+              ) : (
+                ""
+              )}
+              {userDetails && userDetails.isAdmin ? (
+                <MiniMenuNavLink
+                  key={"adminMiniLinks" + adminPages.url}
+                  {...adminPages[0]}
+                />
+              ) : (
+                ""
+              )}
+              {isLoggedIn
                 ? loggedInPages.map((page) =>
                     page.url === ROUTES.LOGOUT ? (
                       <MiniMenuNavLink

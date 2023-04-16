@@ -1,9 +1,12 @@
 const ROUTES = {
   HOME: "/",
-  FAKEHOME: "/home",
+  ABOUT: "/about",
   REGISTER: "/register",
   LOGIN: "/login",
   PROFILE: "/profile",
+  FAVCARDS: "/favcards",
+  SANDBOX: "/sandbox",
+  MYCARDS: "/mycards",
   LOGOUT: "/logout"
 };
 
