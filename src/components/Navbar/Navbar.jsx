@@ -17,6 +17,7 @@ import { authActions } from "../../store/auth";
 import MiniMenuNavLink from "./MiniMenuNavLink";
 import logoImg from "../../newBizLogo.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
 // access to all
 const pages = [
@@ -126,10 +127,17 @@ const MuiNavbar = () => {
             }}
           >
             <IconButton onClick={changeTheme}>
-              <DarkModeIcon
-                fontSize={"large"}
-                color={isDarkTheme ? "white" : "black"}
-              />
+              {isDarkTheme ? (
+                <LightModeIcon
+                  fontSize={"large"}
+                  color={isDarkTheme ? "white" : "black"}
+                />
+              ) : (
+                <DarkModeIcon
+                  fontSize={"large"}
+                  color={isDarkTheme ? "white" : "black"}
+                />
+              )}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

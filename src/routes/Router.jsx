@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "../pages/HomePage";
-import RegisterPage from "../pages/RegisterPage";
 import ROUTES from "./ROUTES";
 import LoginPage from "../pages/LoginPage";
 import EditCardPage from "../pages/EditCardPage";
@@ -9,6 +8,7 @@ import ProfilePage from "../pages/ProfilePage";
 import TkProtectedRoutes from "../components/TkProtectedRoutes";
 import AddNewCardPage from "../pages/AddNewCardPage";
 import LogoutLink from "../components/LogoutLink";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
 
 const Router = () => {
   return (
@@ -48,6 +48,7 @@ const Router = () => {
         path={ROUTES.LOGOUT}
         element={<ProtectedRoute element={<LogoutLink />} />}
       />
+
       <Route path="*" element={<h1>404</h1>} />
     </Routes>
   );

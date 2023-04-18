@@ -85,7 +85,7 @@ const HomePage = () => {
     <Box>
       <Grid container>
         {cardsArr.map((item) => (
-          <Grid item xs={4} key={item._id + Date.now()}>
+          <Grid item xs={3} key={item._id + Date.now()}>
             <CardComponent
               id={item._id}
               user_id={item.user_id}
