@@ -40,10 +40,10 @@ const RegisterPage = () => {
     Object.fromEntries(registerInputs.map((item) => [item.stateName, ""]))
   );
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
-  const [disableButtonState, setDisableButtonState] = useState(false);
+  const [disableButtonState, setDisableButtonState] = useState(true);
   const [checkedBoxState, setBoxState] = useState(false);
   const navigate = useNavigate();
-  /* useEffect(() => {
+  useEffect(() => {
     if (
       inputState.firstName.trim() &&
       inputState.lastName.trim() &&
@@ -69,7 +69,7 @@ const RegisterPage = () => {
     inputState.city,
     inputState.street,
     inputState.houseNumber,
-  ]); */
+  ]);
   const handleBtnClick = async (ev) => {
     try {
       const joiResponse = validateRegisterSchema(inputState);
