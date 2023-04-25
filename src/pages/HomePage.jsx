@@ -66,7 +66,6 @@ const HomePage = () => {
   const handleLikeBtn = async (id) => {
     try {
       await axios.patch("/cards/card-like/" + id);
-      console.log("sent like");
     } catch (err) {
       console.log(err.response.data);
     }

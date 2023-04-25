@@ -26,26 +26,24 @@ const FavoritePage = () => {
 
   const handleLikeBtn = async (id) => {
     try {
-      console.log("userLikedCards before", userLikedCards);
       await axios.patch("/cards/card-like/" + id);
       const updatedCardsArr = userLikedCards.filter((card) => card._id !== id);
       setUserLikedCards(updatedCardsArr);
-      console.log("userLikedCards after", userLikedCards);
     } catch (err) {
       console.log(err.response.data);
     }
   };
 
-  /* const handleDeleteBtn = async (id) => {
+  const handleDeleteBtn = async (id) => {
     try {
       await axios.delete("/cards/" + id);
-      setCardsArr((newCardsArr) =>
+      setUserLikedCards((newCardsArr) =>
         newCardsArr.filter((item) => item._id != id)
       );
     } catch (err) {
       console.log("error when deleting", err.response.data);
     }
-  }; */
+  };
 
   const handleEditBtn = (id) => {
     navigate(`/edit/${id}`);
@@ -56,7 +54,7 @@ const FavoritePage = () => {
   };
   return (
     <Box>
-      <h1>FAVCARDS</h1>
+      <h1>Favorite Cards</h1>
       <Grid container>
         {userLikedCards.map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={item._id + Date.now()}>
@@ -69,7 +67,7 @@ const FavoritePage = () => {
               address={item.street + " " + item.houseNumber + " " + item.city}
               bizNumber={item.bizNumber}
               img={item.image ? item.image.url : ""}
-              onDelete={handleLikeBtn}
+              onDelete={handleDeleteBtn}
               onEdit={handleEditBtn}
               onCallClick={handleCallBtnClick}
               onLikeClick={handleLikeBtn}

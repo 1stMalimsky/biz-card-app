@@ -1,4 +1,3 @@
-import ROUTES from "../routes/ROUTES";
 import { CircularProgress } from "@mui/material";
 
 const LogoutLink = () => {

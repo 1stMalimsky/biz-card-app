@@ -12,11 +12,12 @@ import {
   IconButton,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import CallIcon from "@mui/icons-material/Call";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const FavCardComponent = ({
+const MyCardComponent = ({
   img,
   title,
   subTitle,
@@ -27,11 +28,10 @@ const FavCardComponent = ({
   user_id,
   onDelete,
   onEdit,
-  bizControls,
-  adminControls,
   onCallClick,
   currentUser,
   onLikeClick,
+  liked,
 }) => {
   const handleDeleteBtnClick = () => {
     onDelete(id);
@@ -67,45 +67,27 @@ const FavCardComponent = ({
         <IconButton onClick={handleCallBtnClick}>
           <CallIcon />
         </IconButton>
-        {adminControls ? (
-          <Fragment>
-            <IconButton
-              onClick={handleEditBtnClick}
-              sx={{ display: currentUser == user_id ? "block" : "none" }}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton onClick={handleDeleteBtnClick}>
-              <DeleteIcon />
-            </IconButton>
-          </Fragment>
-        ) : bizControls ? (
-          <Fragment>
-            <IconButton
-              onClick={handleEditBtnClick}
-              sx={{ display: currentUser == user_id ? "block" : "none" }}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              onClick={handleDeleteBtnClick}
-              sx={{ display: currentUser == user_id ? "block" : "none" }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Fragment>
-        ) : (
-          ""
-        )}
-        <IconButton onClick={handleLikeBtnClick}>
-          <FavoriteBorderIcon />
+        <IconButton onClick={handleEditBtnClick}>
+          <EditIcon />
         </IconButton>
+        <IconButton onClick={handleDeleteBtnClick}>
+          <DeleteIcon />
+        </IconButton>
+        {liked ? (
+          <IconButton onClick={handleLikeBtnClick}>
+            <FavoriteIcon />
+          </IconButton>
+        ) : (
+          <IconButton onClick={handleLikeBtnClick}>
+            <FavoriteBorderIcon />
+          </IconButton>
+        )}
       </CardActions>
     </Card>
   );
 };
 
-FavCardComponent.propTypes = {
+MyCardComponent.propTypes = {
   id: PropTypes.string,
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -122,7 +104,7 @@ FavCardComponent.propTypes = {
   currentUser: PropTypes.string,
 };
 
-FavCardComponent.defaultProps = {
+MyCardComponent.defaultProps = {
   img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K",
   subTitle: "",
   canEdit: false,
@@ -130,4 +112,4 @@ FavCardComponent.defaultProps = {
   adminControls: false,
 };
 
-export default FavCardComponent;
+export default MyCardComponent;

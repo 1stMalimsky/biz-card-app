@@ -65,7 +65,6 @@ const adminPages = [{ label: "SANDBOX", url: ROUTES.SANDBOX }];
 const MuiNavbar = () => {
   const isLoggedIn = useSelector((bigState) => bigState.authSlice.isLoggedIn);
   const userDetails = useSelector((bigState) => bigState.authSlice.payload);
-  console.log(userDetails);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const dispatch = useDispatch();
   const isDarkTheme = useSelector(

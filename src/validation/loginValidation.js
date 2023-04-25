@@ -10,9 +10,9 @@ const loginSchema = Joi.object({
   password: Joi.string()
     .pattern(new RegExp("^(?=.*[A-Z])(?=.*[a-z]).{0,}$"))
     .messages({
-      "string.empty": "the password should not be empty",
+      "string.empty": "Password can't be empty",
       "string.pattern.base":
-        "the password should be supper protected, this mean that its should contain only upper and lower case latter's",
+        "Password should contain at least 9 characters, upper and lowercase letters, numbers and a special sign: !@#$%",
     })
     .min(2)
     .max(10)

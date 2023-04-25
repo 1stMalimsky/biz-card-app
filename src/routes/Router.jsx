@@ -10,7 +10,7 @@ import AddNewCardPage from "../pages/AddNewCardPage";
 import LogoutLink from "../components/LogoutLink";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import FavoritePage from "../pages/FavoritePage";
-
+import MyCardPage from "../pages/MyCardsPage";
 const Router = () => {
   return (
     <Routes>
@@ -43,7 +43,7 @@ const Router = () => {
           />
         }
       />
-      <Route path={ROUTES.MYCARDS} element={<h1>My Cards</h1>} />
+      <Route path={ROUTES.MYCARDS} element={<MyCardPage />} />
       <Route path={ROUTES.SANDBOX} element={<h1>Sandbox</h1>} />
       <Route
         path={ROUTES.LOGOUT}

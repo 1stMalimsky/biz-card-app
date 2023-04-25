@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import CachedIcon from "@mui/icons-material/Cached";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -21,10 +22,19 @@ const LoginPage = () => {
     password: "",
   });
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
+  const [buttonDisabledState, setButtonDisabledState] = useState(true);
   const loggedIn = useLoggedIn();
   const navigate = useNavigate();
 
-  const handleBtnClick = async (ev) => {
+  useEffect(() => {
+    if (inputState.email.trim() && inputState.password.trim()) {
+      setButtonDisabledState(false);
+    } else {
+      setButtonDisabledState(true);
+    }
+  }, [inputState.email, inputState.password]);
+
+  const handleSignInBtnClick = async (ev) => {
     try {
       const joiResponse = validateLoginSchema(inputState);
       setInputsErrorsState(joiResponse);
@@ -44,6 +54,11 @@ const LoginPage = () => {
     newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
   };
+
+  const handleResetBtn = () => {
+    setInputState({ email: "", password: "" });
+    setInputsErrorsState(null);
+  };
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -57,8 +72,8 @@ const LoginPage = () => {
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+        <Typography component="h1" variant="h4">
+          Log In Page
         </Typography>
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -101,15 +116,31 @@ const LoginPage = () => {
                 </Alert>
               )}
             </Grid>
+            <Grid item xs={6}>
+              <Button
+                variant="contained"
+                fullWidth
+                onClick={() => navigate(ROUTES.HOME)}
+              >
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button variant="contained" fullWidth onClick={handleResetBtn}>
+                <CachedIcon />
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                variant="contained"
+                onClick={handleSignInBtnClick}
+                disabled={buttonDisabledState}
+              >
+                Log In
+              </Button>
+            </Grid>
           </Grid>
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleBtnClick}
-          >
-            Sign In
-          </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link to={ROUTES.REGISTER}>Did not have an account? Sign up</Link>

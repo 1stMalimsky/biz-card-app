@@ -14,7 +14,11 @@ const registerSchema = Joi.object({
     .required(),
   password: Joi.string()
     .pattern(new RegExp("^(?=.*[A-Z])(?=.*[a-z]).{0,}$"))
-    .min(6)
+    .min(6).messages({
+      "string.empty": "Password can't be empty",
+      "string.pattern.base":
+        "Password should contain at least 9 characters, upper and lowercase letters, numbers and a special sign: !@#$%"
+    })
     .required(),
   imageUrl: Joi.string().uri().regex(imageRegex),
   imageAlt: Joi.string().min(0).max(15),
