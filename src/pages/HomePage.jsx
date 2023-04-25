@@ -10,19 +10,15 @@ import { useSelector } from "react-redux";
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
+  const [likedState, setLikedState] = useState(false);
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   useEffect(() => {
-    /*
-      useEffect cant handle async ()=>{}
-      this is why we use the old promise way
-    */
     axios
       .get("/cards/cards")
       .then(({ data }) => {
-        console.log("data", data);
-        // setCardsArr(data);
+        setCardsArr(data);
         filterFunc(data);
       })
       .catch((err) => {
@@ -39,17 +35,11 @@ const HomePage = () => {
       filter = qparams.filter;
     }
     if (!originalCardsArr && data) {
-      /*
-        when component loaded and states not loaded
-      */
       setOriginalCardsArr(data);
       setCardsArr(data.filter((card) => card.title.startsWith(filter)));
       return;
     }
     if (originalCardsArr) {
-      /*
-        when all loaded and states loaded
-      */
       let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCardsArr));
       setCardsArr(
         newOriginalCardsArr.filter((card) => card.title.startsWith(filter))
@@ -61,7 +51,7 @@ const HomePage = () => {
   }, [qparams.filter]);
   const handleDeleteFromInitialCardsArr = async (id) => {
     try {
-      await axios.delete("/cards/" + id); // /cards/:id
+      await axios.delete("/cards/" + id);
       setCardsArr((newCardsArr) =>
         newCardsArr.filter((item) => item._id != id)
       );
@@ -71,6 +61,15 @@ const HomePage = () => {
   };
   const handleEditFromInitialCardsArr = (id) => {
     navigate(`/edit/${id}`);
+  };
+
+  const handleLikeBtn = async (id) => {
+    try {
+      await axios.patch("/cards/card-like/" + id);
+      console.log("sent like");
+    } catch (err) {
+      console.log(err.response.data);
+    }
   };
 
   const handleCallBtnClick = () => {
@@ -85,7 +84,7 @@ const HomePage = () => {
     <Box>
       <Grid container>
         {cardsArr.map((item) => (
-          <Grid item xs={3} key={item._id + Date.now()}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={item._id + Date.now()}>
             <CardComponent
               id={item._id}
               user_id={item.user_id}
@@ -103,6 +102,8 @@ const HomePage = () => {
               adminControls={payload && payload.isAdmin}
               onCallClick={handleCallBtnClick}
               currentUser={payload && payload._id}
+              onLikeClick={handleLikeBtn}
+              likedState={likedState}
             />
           </Grid>
         ))}

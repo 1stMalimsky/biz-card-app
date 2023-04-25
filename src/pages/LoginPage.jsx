@@ -34,7 +34,6 @@ const LoginPage = () => {
       const { data } = await axios.post("/users/login", inputState);
       localStorage.setItem("token", data.token);
       loggedIn();
-      //move to homepage
       navigate(ROUTES.HOME);
     } catch (err) {
       console.log("login error", err);
@@ -113,11 +112,7 @@ const LoginPage = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to={ROUTES.REGISTER}>
-                <Typography variant="body2">
-                  Did not have an account? Sign up
-                </Typography>
-              </Link>
+              <Link to={ROUTES.REGISTER}>Did not have an account? Sign up</Link>
             </Grid>
           </Grid>
         </Box>

@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Card,
@@ -15,8 +15,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CallIcon from "@mui/icons-material/Call";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
 
-const CardComponent = ({
+const FavCardComponent = ({
   img,
   title,
   subTitle,
@@ -37,9 +38,9 @@ const CardComponent = ({
     onDelete(id);
   };
   const handleEditBtnClick = () => {
+    console.log("editBtnClicked");
     onEdit(id);
   };
-
   const handleCallBtnClick = () => {
     onCallClick();
   };
@@ -98,10 +99,7 @@ const CardComponent = ({
         ) : (
           ""
         )}
-        <IconButton
-          onClick={handleLikeBtnClick}
-          sx={{ display: currentUser ? "block" : "none" }}
-        >
+        <IconButton onClick={handleLikeBtnClick}>
           <FavoriteIcon />
         </IconButton>
       </CardActions>
@@ -109,7 +107,7 @@ const CardComponent = ({
   );
 };
 
-CardComponent.propTypes = {
+/* CardComponent.propTypes = {
   id: PropTypes.string,
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -124,14 +122,14 @@ CardComponent.propTypes = {
   bizControls: PropTypes.bool,
   adminControls: PropTypes.bool,
   currentUser: PropTypes.string,
-};
+}; */
 
-CardComponent.defaultProps = {
+/* CardComponent.defaultProps = {
   img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K",
   subTitle: "",
   canEdit: false,
   bizControls: false,
   adminControls: false,
-};
+}; */
 
-export default CardComponent;
+export default FavCardComponent;

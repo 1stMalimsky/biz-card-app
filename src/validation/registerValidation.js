@@ -16,7 +16,7 @@ const registerSchema = Joi.object({
     .pattern(new RegExp("^(?=.*[A-Z])(?=.*[a-z]).{0,}$"))
     .min(6)
     .required(),
-  imageUrl: Joi.string().uri().imageRegex(),
+  imageUrl: Joi.string().uri().regex(imageRegex),
   imageAlt: Joi.string().min(0).max(15),
   state: Joi.string().min(0).max(15),
   country: Joi.string().min(2).max(20).required(),

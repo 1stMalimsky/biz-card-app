@@ -9,13 +9,14 @@ import TkProtectedRoutes from "../components/TkProtectedRoutes";
 import AddNewCardPage from "../pages/AddNewCardPage";
 import LogoutLink from "../components/LogoutLink";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
+import FavoritePage from "../pages/FavoritePage";
 
 const Router = () => {
   return (
     <Routes>
       <Route path={ROUTES.HOME} element={<HomePage />} />
       <Route path={ROUTES.ABOUT} element={<h1>About Us</h1>} />
-      <Route path={ROUTES.FAVCARDS} element={<h1>FavCards</h1>} />
+      <Route path={ROUTES.FAVCARDS} element={<FavoritePage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route
