@@ -11,8 +11,6 @@ import useCheckCards from "../hooks/useCheckCards";
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
-  const [likedCards, setLikedCards] = useState([]);
-  const [likedState, setLikedState] = useState(false);
 
   const navigate = useNavigate();
   let qparams = useQueryParams();
