@@ -74,6 +74,7 @@ const RegisterPage = () => {
     try {
       const joiResponse = validateRegisterSchema(inputState);
       setInputsErrorsState(joiResponse);
+      console.log(joiResponse);
       if (joiResponse) {
         return;
       }

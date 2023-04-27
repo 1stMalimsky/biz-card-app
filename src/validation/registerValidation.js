@@ -20,7 +20,7 @@ const registerSchema = Joi.object({
         "Password should contain at least 9 characters, upper and lowercase letters, numbers and a special sign: !@#$%"
     })
     .required(),
-  imageUrl: Joi.string().uri().regex(imageRegex),
+  imageUrl: Joi.string().allow("").uri().regex(imageRegex),
   imageAlt: Joi.string().min(0).max(15),
   state: Joi.string().min(0).max(15),
   country: Joi.string().min(2).max(20).required(),
