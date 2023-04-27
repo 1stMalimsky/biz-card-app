@@ -15,6 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CallIcon from "@mui/icons-material/Call";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { FavoriteBorderOutlined } from "@mui/icons-material";
 
 const CardComponent = ({
   img,
@@ -32,6 +33,7 @@ const CardComponent = ({
   onCallClick,
   currentUser,
   onLikeClick,
+  isLiked,
 }) => {
   const handleDeleteBtnClick = () => {
     onDelete(id);

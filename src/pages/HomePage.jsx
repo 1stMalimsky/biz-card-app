@@ -10,7 +10,9 @@ import { useSelector } from "react-redux";
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
+  const [likedCards, setLikedCards] = useState([]);
   const [likedState, setLikedState] = useState(false);
+
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
@@ -26,6 +28,7 @@ const HomePage = () => {
         toast.error("Oops! Couldn't load your cards. Please try again");
       });
   }, []);
+
   const filterFunc = (data) => {
     if (!originalCardsArr && !data) {
       return;
@@ -102,10 +105,10 @@ const HomePage = () => {
               onCallClick={handleCallBtnClick}
               currentUser={payload && payload._id}
               onLikeClick={handleLikeBtn}
-              likedState={likedState}
             />
           </Grid>
         ))}
+        ;
       </Grid>
     </Box>
   );

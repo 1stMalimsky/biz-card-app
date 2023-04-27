@@ -31,8 +31,9 @@ const MyCardComponent = ({
   onCallClick,
   currentUser,
   onLikeClick,
-  liked,
+  isLiked,
 }) => {
+  console.log(id, "liked");
   const handleDeleteBtnClick = () => {
     onDelete(id);
   };
@@ -73,15 +74,9 @@ const MyCardComponent = ({
         <IconButton onClick={handleDeleteBtnClick}>
           <DeleteIcon />
         </IconButton>
-        {liked ? (
-          <IconButton onClick={handleLikeBtnClick}>
-            <FavoriteIcon />
-          </IconButton>
-        ) : (
-          <IconButton onClick={handleLikeBtnClick}>
-            <FavoriteBorderIcon />
-          </IconButton>
-        )}
+        <IconButton onClick={handleLikeBtnClick}>
+          {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        </IconButton>
       </CardActions>
     </Card>
   );
@@ -110,6 +105,7 @@ MyCardComponent.defaultProps = {
   canEdit: false,
   bizControls: false,
   adminControls: false,
+  liked: false,
 };
 
 export default MyCardComponent;
