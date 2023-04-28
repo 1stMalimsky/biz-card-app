@@ -4,16 +4,13 @@ import validation from "./validation";
 
 const imageRegex = /.(jpg|jpeg|png|gif)$/i;
 
-const registerSchema = Joi.object({
+const profileSchema = Joi.object({
   firstName: Joi.string().min(2).max(100).required(),
   lastName: Joi.string().min(2).max(100).required(),
   middleName: Joi.string().min(0).max(100),
   phone: Joi.number().required(),
   email: Joi.string()
     .email({ tlds: { allow: false } })
-    .required(),
-  password: Joi.string()
-    .pattern(new RegExp("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_+])[a-zA-Z0-9!@#$%^&*()_+]{8,}$"))
     .required(),
   imageUrl: Joi.string().allow("").uri().regex(imageRegex),
   imageAlt: Joi.string().min(0).max(15),
@@ -25,7 +22,7 @@ const registerSchema = Joi.object({
   zipCode: Joi.number().required(),
 });
 
-const validateRegisterSchema = (userInput) =>
-  validation(registerSchema, userInput);
+const validateProfileSchema = (userInput) =>
+  validation(profileSchema, userInput);
 
-export default validateRegisterSchema;
+export default validateProfileSchema;

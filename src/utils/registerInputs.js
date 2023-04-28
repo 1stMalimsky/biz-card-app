@@ -12,7 +12,7 @@ const registerInputs = [
     { inputName: "City", stateName: "city", required: true },
     { inputName: "Street", stateName: "street", required: true },
     { inputName: "House Number", stateName: "houseNumber", required: true },
-    { inputName: "Zipcode", stateName: "zipCode", required: false },
+    { inputName: "Zipcode", stateName: "zipCode", required: true },
 ];
 
 export default registerInputs;

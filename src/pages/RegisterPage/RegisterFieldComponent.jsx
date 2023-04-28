@@ -22,7 +22,7 @@ const RegisterFieldComponent = ({ input, required, value, id, onChange }) => {
 RegisterFieldComponent.propTypes = {
   input: PropTypes.string,
   required: PropTypes.bool,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   id: PropTypes.string,
   onChange: PropTypes.func,
 };

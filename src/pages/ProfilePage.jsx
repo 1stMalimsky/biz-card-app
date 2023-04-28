@@ -1,39 +1,53 @@
 import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import registerInputs from "../utils/registerInputs";
-import validateRegisterSchema from "../validation/registerValidation";
+import validateProfileSchema from "../validation/profileValidation";
 import ROUTES from "../routes/ROUTES";
 import RegisterFieldComponent from "./RegisterPage/RegisterFieldComponent";
 import CachedIcon from "@mui/icons-material/Cached";
-import useCheckCards from "../hooks/useCheckCards";
+import { toast } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 
 const ProfilePage = () => {
-  const [inputState, setInputState] = useState(
-    Object.fromEntries(registerInputs.map((item) => [item.stateName, ""]))
-  );
+  const [inputState, setInputState] = useState("");
+  const [inputSubmitState, setInputSubmitState] = useState("");
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const [disableButtonState, setDisableButtonState] = useState(true);
   const navigate = useNavigate();
+  const profileInputs = registerInputs.filter(
+    (item) => item.inputName !== "Password"
+  );
+
   useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get("/users/userInfo");
+        setInputState(data);
+      } catch (err) {
+        console.log("err from axios", err);
+        toast.error("Oops! Couldn't load your profile. Please try again");
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!inputState) {
+      return;
+    }
     if (
       inputState.firstName.trim() &&
       inputState.lastName.trim() &&
       inputState.phone.trim() &&
       inputState.email.trim() &&
-      inputState.password.trim() &&
       inputState.country.trim() &&
       inputState.city.trim() &&
       inputState.street.trim &&
@@ -48,7 +62,6 @@ const ProfilePage = () => {
     inputState.lastName,
     inputState.phone,
     inputState.email,
-    inputState.password,
     inputState.country,
     inputState.city,
     inputState.street,
@@ -57,17 +70,13 @@ const ProfilePage = () => {
 
   const handleBtnClick = async (ev) => {
     try {
-      const joiResponse = validateRegisterSchema(inputState);
+      const joiResponse = validateProfileSchema(inputSubmitState);
       setInputsErrorsState(joiResponse);
       if (joiResponse) {
         return;
       }
-      await axios.post("/users/register", {
-        name: inputState.firstName + " " + inputState.lastName,
-        email: inputState.email,
-        password: inputState.password,
-      });
-      navigate(ROUTES.LOGIN);
+      await axios.put("/users/userInfo/" + inputState._id, inputSubmitState);
+      toast.success("User info updated!");
     } catch (err) {
       console.log("error from axios", err.response.data);
     }
@@ -76,6 +85,8 @@ const ProfilePage = () => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
+    const { _id, isAdmin, biz, ...rest } = inputState;
+    setInputSubmitState(rest);
   };
   const handleResetBtn = () => {
     setInputState(
@@ -83,6 +94,11 @@ const ProfilePage = () => {
     );
     setInputsErrorsState(null);
   };
+
+  if (!inputState) {
+    return <CircularProgress />;
+  }
+
   return (
     <Container component="main" maxWidth="md">
       <Box
@@ -93,15 +109,17 @@ const ProfilePage = () => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <Avatar
+          sx={{ bgcolor: "secondary.main" }}
+          src={inputState.imageUrl ? inputState.imageUrl : ""}
+          alt={inputState.imageAlt}
+        />
         <Typography component="h1" variant="h4">
-          Register Page
+          Profile Page
         </Typography>
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            {registerInputs.map((item) => (
+            {profileInputs.map((item) => (
               <Grid
                 item
                 xs={12}
@@ -125,6 +143,7 @@ const ProfilePage = () => {
                 )}
               </Grid>
             ))}
+            <Grid item xs={12} sm={8}></Grid>
             <Grid item xs={6}>
               <Button
                 variant="contained"
