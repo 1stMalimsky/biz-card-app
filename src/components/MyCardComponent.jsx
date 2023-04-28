@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import PropTypes from "prop-types";
 import {
   Card,
@@ -33,7 +32,6 @@ const MyCardComponent = ({
   onLikeClick,
   isLiked,
 }) => {
-  console.log(id, "liked");
   const handleDeleteBtnClick = () => {
     onDelete(id);
   };

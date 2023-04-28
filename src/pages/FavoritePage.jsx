@@ -52,6 +52,7 @@ const FavoritePage = () => {
   const handleCallBtnClick = () => {
     toast.success("The call function is coming soon!");
   };
+
   return (
     <Box>
       <h1>Favorite Cards</h1>

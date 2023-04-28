@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Box, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import MyCardComponent from "../components/MyCardComponent";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import useLikedStatuesCheck from "../hooks/useLikedStatusCheck";
+import AddIcon from "@mui/icons-material/Add";
 
 const MyCards = () => {
   const [myCards, setmyCards] = useState([]);
   const [likedCards, setLikedCards] = useState([]);
   const [likeClicked, setLikeClicked] = useState(false);
-
   const userPayload = useSelector((bigState) => bigState.authSlice.payload);
   const userId = userPayload._id;
   const navigate = useNavigate();
@@ -47,6 +48,15 @@ const MyCards = () => {
   return (
     <Box>
       <h1>My Cards</h1>
+      <Button
+        variant="contained"
+        startIcon={<AddIcon />}
+        onClick={() => {
+          navigate("/addnew");
+        }}
+      >
+        <Typography varient="h4">ADD NEW CARD</Typography>
+      </Button>
       <Grid container>
         {myCards.map((item) => {
           const isLiked = likedCards.some((card) => card._id === item._id);
