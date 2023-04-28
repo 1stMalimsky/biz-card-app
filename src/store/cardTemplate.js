@@ -13,10 +13,6 @@ const initialState = [{
     stateName: "description"
 },
 {
-    name: "Address",
-    stateName: "address"
-},
-{
     name: "Image Url",
     stateName: "url"
 },
@@ -28,6 +24,35 @@ const initialState = [{
     name: "Phone Number",
     stateName: "phone"
 },
+{
+    name: "Country",
+    stateName: "country"
+},
+{
+    name: "City",
+    stateName: "city"
+},
+{
+    name: "Street",
+    stateName: "street"
+},
+{
+    name: "House Number",
+    stateName: "houseNumber"
+},
+{
+    name: "Zipcode",
+    stateName: "zipCode"
+},
+{
+    name: "Website",
+    stateName: "web"
+},
+{
+    name: "Email Address",
+    stateName: "email"
+},
+
 ]
 
 const cardTemplateSlice = createSlice({

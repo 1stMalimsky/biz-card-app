@@ -35,13 +35,13 @@ const AddNewCardPage = () => {
 
   const handleAddCardBtnClick = async (ev) => {
     try {
+      console.log(inputState);
       const joiResponse = validateEditSchema(inputState);
       setInputsErrorsState(joiResponse);
-      console.log(joiResponse);
       if (joiResponse) {
         return;
       }
-      const { data } = await axios.post("/cards/", { inputState });
+      const { data } = await axios.post("/cards/", inputState);
       navigate(ROUTES.MYCARDS);
     } catch (err) {
       console.log(err.response.data);
@@ -69,7 +69,7 @@ const AddNewCardPage = () => {
   };
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="md">
       <Box
         sx={{
           marginTop: 5,
@@ -98,15 +98,33 @@ const AddNewCardPage = () => {
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {cardTemplate.map((item) => (
-              <Grid item xs={6} key={item.stateName + "addCardPage"}>
-                <AddCardInput
-                  input={item.stateName}
-                  label={item.name}
-                  required={true}
-                  value={inputState[item.stateName]}
-                  id={item.stateName}
-                  onChange={handleInputChange}
-                />
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                key={item.stateName + "addCardPage"}
+              >
+                {item.stateName === "description" ? (
+                  <TextField
+                    label={item.name}
+                    required={true}
+                    value={inputState[item.stateName]}
+                    id={item.stateName}
+                    onChange={handleInputChange}
+                    multiline
+                    fullWidth
+                  />
+                ) : (
+                  <AddCardInput
+                    input={item.stateName}
+                    label={item.name}
+                    required={true}
+                    value={inputState[item.stateName]}
+                    id={item.stateName}
+                    onChange={handleInputChange}
+                  />
+                )}
                 {inputsErrorsState && inputsErrorsState[item.stateName] && (
                   <Alert severity="warning">
                     {inputsErrorsState[item.stateName].map((err) => (
@@ -116,7 +134,7 @@ const AddNewCardPage = () => {
                 )}
               </Grid>
             ))}
-            <Grid item xs={6}></Grid>
+            <Grid item xs={12} sm={6}></Grid>
             <Grid item xs={6}>
               <Button
                 fullWidth
