@@ -29,6 +29,7 @@ const dark = {
 };
 
 function App() {
+  const [isLoading, setIsloading] = useState();
   const loggedIn = useLoggedIn();
   useEffect(() => {
     loggedIn();

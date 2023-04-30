@@ -27,6 +27,9 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.payload = null;
     },
+    getId(action) {
+      return action.payload._id
+    }
   },
 });
 

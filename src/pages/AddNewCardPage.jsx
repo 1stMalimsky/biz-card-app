@@ -18,6 +18,7 @@ import atom from "../logo.svg";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useSelector } from "react-redux";
 import AddCardInput from "../components/AddCardInput";
+import { toast } from "react-toastify";
 
 const AddNewCardPage = () => {
   const cardTemplate = useSelector((bigState) => bigState.cardTemplateSlice);
@@ -42,7 +43,8 @@ const AddNewCardPage = () => {
         return;
       }
       const { data } = await axios.post("/cards/", inputState);
-      navigate(ROUTES.MYCARDS);
+      toast.success("SUCCESS! Business Card Add");
+      setTimeout(() => navigate(ROUTES.MYCARDS), 3000);
     } catch (err) {
       console.log(err.response.data);
     }
@@ -87,12 +89,13 @@ const AddNewCardPage = () => {
         <Box
           component="img"
           sx={{
+            display: inputState.url ? "block" : "none",
             height: 233,
             width: 350,
             maxHeight: { xs: 233, md: 167 },
             maxWidth: { xs: 350, md: 250 },
           }}
-          alt={""}
+          alt={"cardImg"}
           src={inputState.url}
         />
         <Box component="div" noValidate sx={{ mt: 3 }}>

@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Card,
@@ -15,7 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CallIcon from "@mui/icons-material/Call";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { FavoriteBorderOutlined } from "@mui/icons-material";
+import { FavoriteBorder, FavoriteBorderOutlined } from "@mui/icons-material";
 
 const CardComponent = ({
   img,
@@ -35,6 +35,8 @@ const CardComponent = ({
   onLikeClick,
   isLiked,
 }) => {
+  const [isLikedStatus, setIsLiked] = useState(isLiked);
+
   const handleDeleteBtnClick = () => {
     onDelete(id);
   };
@@ -51,7 +53,7 @@ const CardComponent = ({
   };
 
   return (
-    <Card square raised sx={{ width: 275, mt: 2 }}>
+    <Card square raised sx={{ width: 275, height: 500, mt: 2 }}>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -104,7 +106,7 @@ const CardComponent = ({
           onClick={handleLikeBtnClick}
           sx={{ display: currentUser ? "block" : "none" }}
         >
-          <FavoriteIcon />
+          {isLikedStatus ? <FavoriteIcon /> : <FavoriteBorder />}
         </IconButton>
       </CardActions>
     </Card>

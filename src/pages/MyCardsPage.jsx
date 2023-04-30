@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, CircularProgress, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import MyCardComponent from "../components/MyCardComponent";
 import axios from "axios";
@@ -14,10 +14,15 @@ const MyCards = () => {
   const [likedCards, setLikedCards] = useState([]);
   const [likeClicked, setLikeClicked] = useState(false);
   const userPayload = useSelector((bigState) => bigState.authSlice.payload);
-  const userId = userPayload._id;
   const navigate = useNavigate();
+  console.log("user payload", userPayload);
 
-  useLikedStatuesCheck(userId, setmyCards, setLikedCards, likeClicked);
+  useLikedStatuesCheck(
+    userPayload ? userPayload._id : null,
+    setmyCards,
+    setLikedCards,
+    likeClicked
+  );
 
   const handleLikeBtn = async (id) => {
     try {
@@ -44,6 +49,10 @@ const MyCards = () => {
   const handleCallBtnClick = () => {
     toast.success("The call function is coming soon!");
   };
+
+  if (userPayload == null) {
+    return <CircularProgress />;
+  }
 
   return (
     <Box>
@@ -77,7 +86,7 @@ const MyCards = () => {
                 onLikeClick={handleLikeBtn}
                 bizControls={userPayload.biz}
                 adminControls={userPayload.isAdmin}
-                currentUser={userId}
+                currentUser={userPayload._id}
                 isLiked={isLiked}
               />
             </Grid>

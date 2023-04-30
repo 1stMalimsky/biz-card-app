@@ -6,6 +6,8 @@ import CardComponent from "../components/CardComponent";
 import { toast } from "react-toastify";
 import useQueryParams from "../hooks/useQueryParams";
 import { useSelector } from "react-redux";
+import useLikedStatuesCheckHomePage from "../hooks/useLikedStatusCheckHomePage";
+import { authActions } from "../store/auth";
 
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
@@ -19,30 +21,30 @@ const HomePage = () => {
   let userId = useSelector((bigPie) => bigPie.authSlice.userId);
 
   useEffect(() => {
+    console.log("initial data executed");
     axios
       .get("/cards/cards")
       .then(({ data }) => {
         setCardsArr(data);
         filterFunc(data);
-        const likedCardsFromData = data.reduce((acc, curr) => {
-          const { _id, likes } = curr;
-          likes.forEach((userId) => {
-            const card = acc.find((card) => card.cardId === _id);
-            if (card) {
-              card.userIds.push(userId);
-            } else {
-              acc.push({ cardId: _id, userIds: [userId] });
-            }
-          });
-          return acc;
-        }, []);
-        setLikedCardsArr(likedCardsFromData);
       })
       .catch((err) => {
         console.log("err from axios", err);
         toast.error("Oops! Couldn't load your cards. Please try again");
       });
   }, [likeClicked]);
+
+  useEffect(() => {
+    console.log("cardsArr", cardsArr);
+
+    if (cardsArr) {
+      setLikedCardsArr(cardsArr.filter((card) => card.likes.includes(userId)));
+      console.log(
+        "likedCards from 2nd useEffect",
+        cardsArr.filter((card) => card.likes.includes(userId))
+      );
+    }
+  }, [cardsArr]);
 
   const filterFunc = (data) => {
     if (!originalCardsArr && !data) {
@@ -102,37 +104,37 @@ const HomePage = () => {
   return (
     <Box>
       <Grid container>
-        {cardsArr.map((item) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={item._id + Date.now()}>
-            <CardComponent
-              id={item._id}
-              user_id={item.user_id}
-              title={item.title}
-              subTitle={item.subTitle}
-              phone={item.phone}
-              address={item.street + " " + item.houseNumber + " " + item.city}
-              bizNumber={item.bizNumber}
-              img={item.image ? item.image.url : ""}
-              onDelete={handleDeleteFromInitialCardsArr}
-              onEdit={handleEditFromInitialCardsArr}
-              bizControls={
-                payload && payload.biz && payload._id == item.user_id
-              }
-              adminControls={payload && payload.isAdmin}
-              onCallClick={handleCallBtnClick}
-              currentUser={payload && userId}
-              onLikeClick={handleLikeBtn}
-              isLiked={
-                likedCardsArr.find(
-                  (card) =>
-                    card.cardId == item._id && card.userIds.includes(userId)
-                )
-                  ? true
-                  : false
-              }
-            />
-          </Grid>
-        ))}
+        {cardsArr.map((item) => {
+          const isLiked = likedCardsArr.some(
+            (card) =>
+              card._id === item._id &&
+              card.likes.includes(payload && payload._id)
+          );
+          return (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={item._id + Date.now()}>
+              <CardComponent
+                id={item._id}
+                user_id={item.user_id}
+                title={item.title}
+                subTitle={item.subTitle}
+                phone={item.phone}
+                address={item.street + " " + item.houseNumber + " " + item.city}
+                bizNumber={item.bizNumber}
+                img={item.image ? item.image.url : ""}
+                onDelete={handleDeleteFromInitialCardsArr}
+                onEdit={handleEditFromInitialCardsArr}
+                bizControls={
+                  payload && payload.biz && payload._id == item.user_id
+                }
+                adminControls={payload && payload.isAdmin}
+                onCallClick={handleCallBtnClick}
+                currentUser={payload && payload._id}
+                onLikeClick={handleLikeBtn}
+                likedCards={isLiked}
+              />
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );
