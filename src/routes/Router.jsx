@@ -5,27 +5,30 @@ import LoginPage from "../pages/LoginPage";
 import EditCardPage from "../pages/EditCardPage";
 import ProtectedRoute from "../components/ProtectedRoute";
 import ProfilePage from "../pages/ProfilePage";
-import TkProtectedRoutes from "../components/TkProtectedRoutes";
+import UsrProtectedRoute from "../components/UsrProtectedRoute";
 import AddNewCardPage from "../pages/AddNewCardPage";
 import LogoutLink from "../components/LogoutLink";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import FavoritePage from "../pages/FavoritePage";
 import MyCardPage from "../pages/MyCardsPage";
+import AboutPage from "../pages/AboutPage/AboutPage";
+
 const Router = () => {
   return (
     <Routes>
       <Route path={ROUTES.HOME} element={<HomePage />} />
-      <Route path={ROUTES.ABOUT} element={<h1>About Us</h1>} />
-      <Route path={ROUTES.FAVCARDS} element={<FavoritePage />} />
+      <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+      <Route path={ROUTES.FAVCARDS} element={<FavoritePage />} />
       <Route
         path="/edit/:id"
         element={
-          <TkProtectedRoutes
+          <UsrProtectedRoute
             needBiz={true}
             needAdmin={true}
             element={<EditCardPage />}
+            accountType={"business/admin"}
           />
         }
       />
@@ -36,10 +39,11 @@ const Router = () => {
       <Route
         path="/addNew"
         element={
-          <TkProtectedRoutes
+          <UsrProtectedRoute
             needBiz={true}
             needAdmin={false}
             element={<AddNewCardPage />}
+            accountType={"business"}
           />
         }
       />

@@ -18,49 +18,13 @@ import MiniMenuNavLink from "./MiniMenuNavLink";
 import logoImg from "../../newBizLogo.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LightModeIcon from "@mui/icons-material/LightMode";
-
-// access to all
-const pages = [
-  {
-    label: "HOME",
-    url: ROUTES.HOME,
-  },
-  {
-    label: "ABOUT",
-    url: ROUTES.ABOUT,
-  },
-];
-//not logged in users
-const notAuthPages = [
-  {
-    label: "REGISTER",
-    url: ROUTES.REGISTER,
-  },
-  {
-    label: "LOGIN",
-    url: ROUTES.LOGIN,
-  },
-];
-//logged in users
-const loggedInPages = [
-  {
-    label: "FAV CARDS",
-    url: ROUTES.FAVCARDS,
-  },
-  {
-    label: "LOGOUT",
-    url: ROUTES.LOGOUT,
-  },
-];
-//biz pages
-const bizPages = [
-  {
-    label: "MY CARDS",
-    url: ROUTES.MYCARDS,
-  },
-];
-//admin pages
-const adminPages = [{ label: "SANDBOX", url: ROUTES.SANDBOX }];
+import {
+  pages,
+  adminPages,
+  bizPages,
+  loggedInPages,
+  notAuthPages,
+} from "./navbarPages";
 
 const MuiNavbar = () => {
   const isLoggedIn = useSelector((bigState) => bigState.authSlice.isLoggedIn);
@@ -70,19 +34,15 @@ const MuiNavbar = () => {
   const isDarkTheme = useSelector(
     (bigPie) => bigPie.darkThemeSlice.isDarkTheme
   );
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const changeTheme = () => {
     dispatch(darkThemeActions.changeTheme());
   };
-
   const handleLogoutClick = () => {
     localStorage.clear();
     dispatch(authActions.logout());
@@ -119,12 +79,7 @@ const MuiNavbar = () => {
             )}
           </Box>
           <SearchPartial />
-          <Box
-            sx={{
-              my: 2,
-              p: 1,
-            }}
-          >
+          <Box>
             <IconButton onClick={changeTheme}>
               {isDarkTheme ? (
                 <LightModeIcon

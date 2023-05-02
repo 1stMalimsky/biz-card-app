@@ -10,46 +10,36 @@ import {
   CardActions,
   Divider,
   IconButton,
+  Box,
 } from "@mui/material";
+import Modal from "@mui/material/Modal";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CallIcon from "@mui/icons-material/Call";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { FavoriteBorder, FavoriteBorderOutlined } from "@mui/icons-material";
 
-const CardComponent = ({
-  img,
-  title,
-  subTitle,
-  phone,
-  address,
-  bizNumber,
-  id,
-  user_id,
-  onDelete,
-  onEdit,
-  bizControls,
-  adminControls,
-  onCallClick,
-  currentUser,
-  onLikeClick,
-  isLiked,
-}) => {
-  const [isLikedStatus, setIsLiked] = useState(isLiked);
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
-  const handleDeleteBtnClick = () => {
-    onDelete(id);
-  };
-  const handleEditBtnClick = () => {
-    onEdit(id);
-  };
+const CardExampleComponent = ({ img }) => {
+  const [isLikedStatus, setIsLiked] = useState(false);
+  const handleDeleteBtnClick = () => {};
+  const handleEditBtnClick = () => {};
 
-  const handleCallBtnClick = () => {
-    onCallClick();
-  };
+  const handleCallBtnClick = () => {};
 
-  const handleLikeBtnClick = async () => {
-    onLikeClick(id);
+  const handleLikeBtnClick = () => {
+    setIsLiked(!isLikedStatus);
   };
 
   return (
@@ -61,51 +51,29 @@ const CardComponent = ({
           sx={{ maxWidth: 275, maxheight: 150 }}
         />
       </CardActionArea>
-      <CardHeader title={title} subheader={subTitle}></CardHeader>
+      <CardHeader
+        title={"BizCard Title Example"}
+        subheader={"subTitle"}
+      ></CardHeader>
       <Divider variant="middle" />
       <CardContent>
-        <Typography>Phone: {phone}</Typography>
-        <Typography>Address: {address}</Typography>
-        <Typography>Card Number: {bizNumber}</Typography>
+        <Typography>Phone: Your business phone #</Typography>
+        <Typography>Address: Your business address</Typography>
+        <Typography>
+          Card Number: We provide you with a unique "BizNumber"
+        </Typography>
       </CardContent>
       <CardActions>
         <IconButton onClick={handleCallBtnClick}>
           <CallIcon />
         </IconButton>
-        {adminControls ? (
-          <Fragment>
-            <IconButton
-              onClick={handleEditBtnClick}
-              sx={{ display: currentUser == user_id ? "block" : "none" }}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton onClick={handleDeleteBtnClick}>
-              <DeleteIcon />
-            </IconButton>
-          </Fragment>
-        ) : bizControls ? (
-          <Fragment>
-            <IconButton
-              onClick={handleEditBtnClick}
-              sx={{ display: currentUser == user_id ? "block" : "none" }}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              onClick={handleDeleteBtnClick}
-              sx={{ display: currentUser == user_id ? "block" : "none" }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Fragment>
-        ) : (
-          ""
-        )}
-        <IconButton
-          onClick={handleLikeBtnClick}
-          sx={{ display: currentUser ? "block" : "none" }}
-        >
+        <IconButton onClick={handleEditBtnClick}>
+          <EditIcon />
+        </IconButton>
+        <IconButton onClick={handleDeleteBtnClick}>
+          <DeleteIcon />
+        </IconButton>
+        <IconButton onClick={handleLikeBtnClick}>
           {isLikedStatus ? <FavoriteIcon /> : <FavoriteBorder />}
         </IconButton>
       </CardActions>
@@ -113,14 +81,14 @@ const CardComponent = ({
   );
 };
 
-CardComponent.propTypes = {
+/* CardComponent.propTypes = {
   id: PropTypes.string,
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
-  bizNumber: PropTypes.string,
+  bizNumber: PropTypes.string.isRequired,
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
   canEdit: PropTypes.bool,
@@ -137,5 +105,5 @@ CardComponent.defaultProps = {
   bizControls: false,
   adminControls: false,
 };
-
-export default CardComponent;
+ */
+export default CardExampleComponent;

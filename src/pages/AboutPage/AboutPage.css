@@ -1,0 +1,6 @@
+@media (max-width: 960px) {
+  .aboutPageBox {
+    display: flex;
+    flex-direction: column;
+  }
+}

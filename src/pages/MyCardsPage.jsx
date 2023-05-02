@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Box, Button, CircularProgress, Grid } from "@mui/material";
+import { Box, Button, CircularProgress, Divider, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import MyCardComponent from "../components/MyCardComponent";
 import axios from "axios";
@@ -15,7 +15,6 @@ const MyCards = () => {
   const [likeClicked, setLikeClicked] = useState(false);
   const userPayload = useSelector((bigState) => bigState.authSlice.payload);
   const navigate = useNavigate();
-  console.log("user payload", userPayload);
 
   useLikedStatuesCheck(
     userPayload ? userPayload._id : null,
@@ -56,7 +55,14 @@ const MyCards = () => {
 
   return (
     <Box>
-      <h1>My Cards</h1>
+      <Typography variant="h2" component="h1">
+        My Cards
+      </Typography>
+      <Typography variant="h6">
+        On this page you'll find all the business cards you've added. In
+        addition, you can also add new cards as well.
+      </Typography>
+      <Divider sx={{ my: 2 }} />
       <Button
         variant="contained"
         startIcon={<AddIcon />}

@@ -1,5 +1,5 @@
-import { useState, useEffect, Fragment } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -11,10 +11,7 @@ import Alert from "@mui/material/Alert";
 import axios from "axios";
 import AddIcon from "@mui/icons-material/Add";
 import ROUTES from "../routes/ROUTES";
-import validateEditSchema, {
-  validateEditCardParamsSchema,
-} from "../validation/editValidation";
-import atom from "../logo.svg";
+import validateEditSchema from "../validation/editValidation";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useSelector } from "react-redux";
 import AddCardInput from "../components/AddCardInput";
@@ -42,9 +39,9 @@ const AddNewCardPage = () => {
       if (joiResponse) {
         return;
       }
-      const { data } = await axios.post("/cards/", inputState);
-      toast.success("SUCCESS! Business Card Add");
-      setTimeout(() => navigate(ROUTES.MYCARDS), 3000);
+      await axios.post("/cards/", inputState);
+      toast.success("SUCCESS! Business Card Added");
+      navigate(ROUTES.MYCARDS);
     } catch (err) {
       console.log(err.response.data);
     }
@@ -84,7 +81,7 @@ const AddNewCardPage = () => {
           <AddIcon />
         </Avatar>
         <Typography component="h1" variant="h4">
-          Edit card
+          Add New Card
         </Typography>
         <Box
           component="img"

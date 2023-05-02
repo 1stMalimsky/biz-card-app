@@ -48,7 +48,7 @@ const FavCardComponent = ({
   };
 
   return (
-    <Card square raised sx={{ width: 275, mt: 2 }}>
+    <Card square raised sx={{ width: 275, height: 500, mt: 2 }}>
       <CardActionArea>
         <CardMedia
           component="img"

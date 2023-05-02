@@ -6,7 +6,6 @@ import {
   CssBaseline,
 } from "@mui/material";
 
-/* toast */
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -29,10 +28,13 @@ const dark = {
 };
 
 function App() {
-  const [isLoading, setIsloading] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const loggedIn = useLoggedIn();
   useEffect(() => {
-    loggedIn();
+    (async () => {
+      await loggedIn();
+      setIsLoading(false);
+    })();
   }, []);
 
   const isDarkTheme = useSelector(
