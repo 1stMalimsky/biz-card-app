@@ -21,7 +21,7 @@ const editCardSchema = Joi.object({
   street: Joi.string().min(2).max(256).required(),
   houseNumber: Joi.number().max(999999999).required(),
   zipCode: Joi.number().max(999999999).required(),
-  web: Joi.string().uri().required(),
+  web: Joi.string().uri(),
 
 });
 

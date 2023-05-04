@@ -104,6 +104,9 @@ const HomePage = () => {
   const handleCallBtnClick = () => {
     toast.success("The call function is coming soon!");
   };
+  const handleMediaClick = (id) => {
+    navigate(`/detail/${id}`);
+  };
 
   if (!cardsArr) {
     return <CircularProgress />;
@@ -140,6 +143,7 @@ const HomePage = () => {
                   ? true
                   : false
               }
+              onMediaClick={handleMediaClick}
             />
           </Grid>
         ))}

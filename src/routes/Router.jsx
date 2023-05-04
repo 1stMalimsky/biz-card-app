@@ -12,6 +12,7 @@ import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import FavoritePage from "../pages/FavoritePage";
 import MyCardPage from "../pages/MyCardsPage";
 import AboutPage from "../pages/AboutPage/AboutPage";
+import DetailedCardPage from "../pages/DetailedCardPage";
 
 const Router = () => {
   return (
@@ -32,6 +33,7 @@ const Router = () => {
           />
         }
       />
+      <Route path="/detail/:id" element={<DetailedCardPage />} />
       <Route
         path={ROUTES.PROFILE}
         element={<ProtectedRoute element={<ProfilePage />} />}

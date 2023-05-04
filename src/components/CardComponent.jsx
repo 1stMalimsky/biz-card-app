@@ -34,6 +34,7 @@ const CardComponent = ({
   currentUser,
   onLikeClick,
   isLiked,
+  onMediaClick,
 }) => {
   const [isLikedStatus, setIsLiked] = useState(isLiked);
 
@@ -49,13 +50,16 @@ const CardComponent = ({
   };
 
   const handleLikeBtnClick = async () => {
-    //setIsLiked(!isLikedStatus);
     onLikeClick(id);
+  };
+
+  const handleMediaClick = () => {
+    onMediaClick(id);
   };
 
   return (
     <Card rounded="true" raised sx={{ width: 275, height: 500, mt: 2 }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleMediaClick}>
         <CardMedia
           component="img"
           image={img}

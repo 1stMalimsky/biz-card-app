@@ -39,7 +39,8 @@ const AddNewCardPage = () => {
       inputState.street.trim() &&
       inputState.houseNumber.trim() &&
       inputState.zipCode.trim() &&
-      inputState.email.trim()
+      inputState.email.trim() &&
+      inputState.web.trim()
     ) {
       setSubmitBtnState(false);
     } else {
@@ -49,13 +50,18 @@ const AddNewCardPage = () => {
 
   const handleAddCardBtnClick = async (ev) => {
     try {
-      console.log(inputState.web);
-      const joiResponse = validateEditSchema(inputState);
+      const updatedInputState = { ...inputState };
+      if (updatedInputState.web) {
+        updatedInputState.web = `https://${updatedInputState.web}`;
+      }
+      console.log(inputState.wed);
+      const joiResponse = validateEditSchema(updatedInputState);
       setInputsErrorsState(joiResponse);
       if (joiResponse) {
+        console.log(joiResponse);
         return;
       }
-      await axios.post("/cards/", inputState);
+      await axios.post("/cards/", updatedInputState);
       toast.success("SUCCESS! Business Card Added");
       navigate(ROUTES.MYCARDS);
     } catch (err) {
@@ -64,7 +70,6 @@ const AddNewCardPage = () => {
   };
 
   const handleResetBtn = () => {
-    console.log("resetBtnClicked");
     const updatedState = { ...inputState };
     Object.keys(inputState).forEach((key) => {
       updatedState[key] = "";
@@ -79,7 +84,6 @@ const AddNewCardPage = () => {
   const handleInputChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
-    console.log(ev.target.id);
     setInputState(newInputState);
   };
 
@@ -103,8 +107,6 @@ const AddNewCardPage = () => {
           component="img"
           sx={{
             display: inputState.url ? "block" : "none",
-            height: 233,
-            width: 350,
             maxHeight: { xs: 233, md: 167 },
             maxWidth: { xs: 350, md: 250 },
           }}
