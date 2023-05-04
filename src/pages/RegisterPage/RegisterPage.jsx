@@ -13,7 +13,6 @@ import Alert from "@mui/material/Alert";
 import CachedIcon from "@mui/icons-material/Cached";
 import PersonAddAltSharpIcon from "@mui/icons-material/PersonAddAltSharp";
 import axios from "axios";
-
 import validateRegisterSchema from "../../validation/registerValidation";
 import ROUTES from "../../routes/ROUTES";
 import RegisterFieldComponent from "./RegisterFieldComponent";

@@ -13,18 +13,25 @@ import AddIcon from "@mui/icons-material/Add";
 import ROUTES from "../routes/ROUTES";
 import validateEditSchema from "../validation/editValidation";
 import CachedIcon from "@mui/icons-material/Cached";
+import { useSelector } from "react-redux";
 import AddCardInput from "../components/AddCardInput";
 import { toast } from "react-toastify";
-import addCardInputs from "../utils/newCardInput";
 
 const AddNewCardPage = () => {
-  const [inputState, setInputState] = useState(
-    Object.fromEntries(addCardInputs.map((item) => [item.stateName, ""]))
-  );
-  //console.log(inputState);
+  const cardTemplate = useSelector((bigState) => bigState.cardTemplateSlice);
+  const initialStateValues = cardTemplate.reduce((acc, item) => {
+    acc[item.stateName] = "";
+    return acc;
+  }, {});
+  const [inputState, setInputState] = useState(initialStateValues);
+  console.log(inputState);
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const [submitBtnState, setSubmitBtnState] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setInputState(initialStateValues);
+  }, []);
 
   useEffect(() => {
     if (
@@ -39,6 +46,7 @@ const AddNewCardPage = () => {
       inputState.street.trim() &&
       inputState.houseNumber.trim() &&
       inputState.zipCode.trim() &&
+      inputState.web.trim() &&
       inputState.email.trim()
     ) {
       setSubmitBtnState(false);
@@ -79,7 +87,6 @@ const AddNewCardPage = () => {
   const handleInputChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
-    console.log(ev.target.id);
     setInputState(newInputState);
   };
 
@@ -113,17 +120,17 @@ const AddNewCardPage = () => {
         />
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            {addCardInputs.map((item) => (
+            {cardTemplate.map((item) => (
               <Grid
                 item
                 xs={12}
                 sm={6}
                 md={4}
-                key={item.inputName + "addCardPage"}
+                key={item.stateName + "addCardPage"}
               >
                 {item.stateName === "description" ? (
                   <TextField
-                    label={item.inputName}
+                    label={item.name}
                     required={true}
                     value={inputState[item.stateName]}
                     id={item.stateName}
@@ -134,17 +141,17 @@ const AddNewCardPage = () => {
                 ) : (
                   <AddCardInput
                     input={item.stateName}
-                    label={item.inputName}
+                    label={item.name}
                     required={true}
                     value={inputState[item.stateName]}
                     id={item.stateName}
                     onChange={handleInputChange}
                   />
                 )}
-                {inputsErrorsState && inputsErrorsState[item.inputName] && (
+                {inputsErrorsState && inputsErrorsState[item.stateName] && (
                   <Alert severity="warning">
-                    {inputsErrorsState[item.inputName].map((err) => (
-                      <div key={item.inputName + err}>{err}</div>
+                    {inputsErrorsState[item.stateName].map((err) => (
+                      <div key={item.stateName + err}>{err}</div>
                     ))}
                   </Alert>
                 )}
