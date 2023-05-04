@@ -18,6 +18,7 @@ import validateRegisterSchema from "../../validation/registerValidation";
 import ROUTES from "../../routes/ROUTES";
 import RegisterFieldComponent from "./RegisterFieldComponent";
 import registerInputs from "../../utils/registerInputs";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const [inputState, setInputState] = useState(
@@ -66,9 +67,11 @@ const RegisterPage = () => {
         "/users/register",
         checkedBoxState ? { ...inputState, biz: true } : inputState
       );
+      toast.success("Registeration success!");
       navigate(ROUTES.LOGIN);
     } catch (err) {
       console.log("error from axios", err.response.data);
+      toast.error("Registrationg error occured. Please try again");
     }
   };
   const handleInputChange = (ev) => {

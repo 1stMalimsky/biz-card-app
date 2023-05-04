@@ -48,22 +48,32 @@ const HomePage = () => {
     if (!originalCardsArr && !data) {
       return;
     }
+    let arrToSearch = originalCardsArr || data;
     let filter = "";
     if (qparams.filter) {
       filter = qparams.filter;
     }
     if (!originalCardsArr && data) {
+      console.log("1st filter", filter);
       setOriginalCardsArr(data);
-      setCardsArr(data.filter((card) => card.title.startsWith(filter)));
+      let searchResult = arrToSearch.filter(
+        (card) =>
+          card.title.startsWith(filter) || card.bizNumber.startsWith(filter)
+      );
+      setCardsArr(searchResult);
       return;
     }
     if (originalCardsArr) {
+      console.log("2nd filter", filter);
       let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCardsArr));
-      setCardsArr(
-        newOriginalCardsArr.filter((card) => card.title.startsWith(filter))
+      let searchResult = newOriginalCardsArr.filter(
+        (card) =>
+          card.title.startsWith(filter) || card.bizNumber.startsWith(filter)
       );
+      setCardsArr(searchResult);
     }
   };
+
   useEffect(() => {
     filterFunc();
   }, [qparams.filter]);

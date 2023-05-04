@@ -33,6 +33,7 @@ const style = {
 
 const CardExampleComponent = ({ img }) => {
   const [isLikedStatus, setIsLiked] = useState(false);
+  console.log("rendered");
   const handleDeleteBtnClick = () => {};
   const handleEditBtnClick = () => {};
 

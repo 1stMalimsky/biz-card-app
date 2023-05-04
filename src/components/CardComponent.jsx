@@ -49,6 +49,7 @@ const CardComponent = ({
   };
 
   const handleLikeBtnClick = async () => {
+    //setIsLiked(!isLikedStatus);
     onLikeClick(id);
   };
 
