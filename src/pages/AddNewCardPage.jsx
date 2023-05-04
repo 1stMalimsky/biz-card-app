@@ -25,15 +25,43 @@ const AddNewCardPage = () => {
   }, {});
   const [inputState, setInputState] = useState(initialStateValues);
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
+  const [submitBtnState, setSubmitBtnState] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     setInputState(initialStateValues);
   }, []);
 
+  useEffect(() => {
+    if (
+      inputState.title.trim() &&
+      inputState.subTitle.trim() &&
+      inputState.description.trim() &&
+      inputState.url.trim() &&
+      inputState.alt.trim() &&
+      inputState.phone.trim() &&
+      inputState.country.trim() &&
+      inputState.city.trim() &&
+      inputState.street.trim() &&
+      inputState.houseNumber.trim() &&
+      inputState.zipCode.trim() &&
+      inputState.web.trim() &&
+      inputState.email.trim()
+    ) {
+      /* let newInputState = JSON.parse(JSON.stringify(inputState)); */
+      setInputState((newInputState) => inputState.forEach((item) => item));
+      setSubmitBtnState(false);
+    } else {
+      setSubmitBtnState(true);
+    }
+  }, [inputState]);
+
   const handleAddCardBtnClick = async (ev) => {
     try {
-      console.log(inputState);
+      let newInputState = JSON.parse(JSON.stringify(inputState));
+      let correctedUrl = inputState.map(
+        (item) => (item.web = "http://" + item.web)
+      );
       const joiResponse = validateEditSchema(inputState);
       setInputsErrorsState(joiResponse);
       if (joiResponse) {
@@ -50,12 +78,11 @@ const AddNewCardPage = () => {
   const handleResetBtn = () => {
     console.log("resetBtnClicked");
     const updatedState = { ...inputState };
-    console.log(inputState);
-    console.log(updatedState);
     Object.keys(inputState).forEach((key) => {
       updatedState[key] = "";
     });
     setInputState(updatedState);
+    setInputsErrorsState(null);
   };
 
   const handleCancelBtnClick = (ev) => {
@@ -154,6 +181,7 @@ const AddNewCardPage = () => {
                 fullWidth
                 variant="contained"
                 onClick={handleAddCardBtnClick}
+                disabled={submitBtnState}
               >
                 Add Card
               </Button>
