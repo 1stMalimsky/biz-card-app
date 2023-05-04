@@ -32,7 +32,7 @@ const LoginPage = () => {
     } else {
       setButtonDisabledState(true);
     }
-  }, [inputState.email, inputState.password]);
+  }, [inputState]);
 
   const handleSignInBtnClick = async (ev) => {
     try {
