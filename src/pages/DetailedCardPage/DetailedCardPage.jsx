@@ -10,13 +10,12 @@ import Alert from "@mui/material/Alert";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import ROUTES from "../routes/ROUTES";
-import validateEditSchema, {
-  validateEditCardParamsSchema,
-} from "../validation/editValidation";
+import { validateEditCardParamsSchema } from "../../validation/editValidation";
 import { Card, CircularProgress } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { toast } from "react-toastify";
+import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
+import "./detailedPage.css";
 
 const DetailedCardPage = () => {
   const { id } = useParams();
@@ -63,29 +62,48 @@ const DetailedCardPage = () => {
   return (
     <Box>
       <Fragment>
-        <Typography variant="h2">Detailed card</Typography>
+        <Typography variant="h2">{cardDetails.title}</Typography>
         <Divider />
       </Fragment>
-      <Grid container>
-        <Grid item xs={8}>
+      <Grid container display="flex" className="gridContainer">
+        <Grid item md={12} lg={8}>
           <Card raised square>
-            <Typography varient="h6" component="p">
-              Title:
+            <Typography className="subtitle">{cardDetails.subTitle}</Typography>
+            <Typography varient="h3" component="h2" className="paragraph">
+              <br /> {cardDetails.description}
               <br />
-              Subtitle:
-              <br /> Description: <br />
-              Phone: <br />
-              Email Address: <br />
-              Country: <br />
-              City: <br />
-              Street: <br />
-              House Number: <br />
-              Zipcode:
+              <br />
+              <Divider />
+              <span className="contactEmboss">
+                Phone Number: {cardDetails.phone}
+                <br />
+                Email Address: {cardDetails.email} <br />
+                <Fragment>
+                  {cardDetails && cardDetails.web ? (
+                    <Typography>Website: {cardDetails.web}</Typography>
+                  ) : (
+                    ""
+                  )}
+                </Fragment>
+                <br />
+                <Divider />
+                Address:
+              </span>
+              <br />
+              {cardDetails.street} {cardDetails.houseNumber},<br />
+              {cardDetails.city} <br />
+              {cardDetails.country} <br />
+              <br />
+              {cardDetails.zipCode}
             </Typography>
           </Card>
         </Grid>
-        <Grid item>
-          <img src="" alt="your img here" srcset="" />
+        <Grid item xs={12} md={4}>
+          <img
+            src={cardDetails.url}
+            alt={cardDetails.alt}
+            style={{ maxWidth: 350 }}
+          />
         </Grid>
       </Grid>
     </Box>

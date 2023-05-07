@@ -12,7 +12,7 @@ import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import FavoritePage from "../pages/FavoritePage";
 import MyCardPage from "../pages/MyCardsPage";
 import AboutPage from "../pages/AboutPage/AboutPage";
-import DetailedCardPage from "../pages/DetailedCardPage";
+import DetailedCardPage from "../pages/DetailedCardPage/DetailedCardPage";
 
 const Router = () => {
   return (

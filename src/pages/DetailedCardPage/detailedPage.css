@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Gloock&family=Roboto:wght@400;500&display=swap");
+
+.gridContainer {
+  margin: 1em 0 1em 0;
+}
+.subtitle {
+  font-family: "roboto";
+  font-size: 2rem !important;
+  font-weight: 400;
+  padding: 0.6rem 0 0 0.6rem;
+}
+
+.paragraph {
+  font-family: "roboto";
+  font-size: 1.2rem !important;
+  padding: 0.6rem;
+}
+
+.contactEmboss {
+  font-size: 1.4rem;
+}
