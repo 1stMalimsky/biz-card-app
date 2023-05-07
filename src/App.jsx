@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Router from "./routes/Router";
 import { useSelector } from "react-redux";
 import useLoggedIn from "./hooks/useLoggedIn";
+import FooterComponent from "./components/FooterComponent";
 
 const light = {
   palette: {
@@ -63,7 +64,9 @@ function App() {
         <main>
           <Router />
         </main>
-        <footer></footer>
+        <footer>
+          <FooterComponent />
+        </footer>
       </Container>
     </ThemeProvider>
   );

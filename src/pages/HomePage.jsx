@@ -54,7 +54,6 @@ const HomePage = () => {
       filter = qparams.filter;
     }
     if (!originalCardsArr && data) {
-      console.log("1st filter", filter);
       setOriginalCardsArr(data);
       let searchResult = arrToSearch.filter(
         (card) =>
@@ -64,7 +63,6 @@ const HomePage = () => {
       return;
     }
     if (originalCardsArr) {
-      console.log("2nd filter", filter);
       let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCardsArr));
       let searchResult = newOriginalCardsArr.filter(
         (card) =>

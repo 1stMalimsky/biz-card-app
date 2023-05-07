@@ -1,21 +1,21 @@
 import { useState, useEffect, Fragment } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Alert from "@mui/material/Alert";
-import EditIcon from "@mui/icons-material/Edit";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { validateEditCardParamsSchema } from "../../validation/editValidation";
 import { Card, CircularProgress } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { toast } from "react-toastify";
-import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import "./detailedPage.css";
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear().toString().slice(-2);
+  return `${day}/${month}/${year}`;
+};
 
 const DetailedCardPage = () => {
   const { id } = useParams();
@@ -48,7 +48,7 @@ const DetailedCardPage = () => {
         delete newInputState._id;
         delete newInputState.user_id;
         delete newInputState.bizNumber;
-        delete newInputState.createdAt;
+        //delete newInputState.createdAt;
         setCardDetails(newInputState);
       } catch (err) {
         console.log("error from axios", err);
@@ -65,40 +65,71 @@ const DetailedCardPage = () => {
         <Typography variant="h2">{cardDetails.title}</Typography>
         <Divider />
       </Fragment>
+      <br />
       <Grid container display="flex" className="gridContainer">
         <Grid item md={12} lg={8}>
           <Card raised square>
-            <Typography className="subtitle">{cardDetails.subTitle}</Typography>
-            <Typography varient="h3" component="h2" className="paragraph">
-              <br /> {cardDetails.description}
-              <br />
-              <br />
-              <Divider />
-              <span className="contactEmboss">
-                Phone Number: {cardDetails.phone}
-                <br />
-                Email Address: {cardDetails.email} <br />
-                <Fragment>
-                  {cardDetails && cardDetails.web ? (
-                    <Typography>Website: {cardDetails.web}</Typography>
-                  ) : (
-                    ""
-                  )}
-                </Fragment>
-                <br />
-                <Divider />
-                Address:
-              </span>
-              <br />
-              {cardDetails.street} {cardDetails.houseNumber},<br />
-              {cardDetails.city} <br />
-              {cardDetails.country} <br />
-              <br />
-              {cardDetails.zipCode}
-            </Typography>
+            <Grid item xs={12}>
+              <Typography className="subtitle">
+                {cardDetails.subTitle}
+              </Typography>
+            </Grid>
+            <Divider />
+            <Grid item xs={12}>
+              <Typography className="paragraph">
+                {cardDetails.description}
+              </Typography>
+            </Grid>
+            <Divider />
+            <br />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+              }}
+            >
+              <Grid item xs={12} sm={5} className="gridItem">
+                <Typography className="contactEmboss">
+                  Phone Number: {cardDetails.phone}
+                  <br />
+                  Email Address: {cardDetails.email} <br />
+                  <Fragment>
+                    {cardDetails && cardDetails.web ? (
+                      <Typography className="contactEmboss">
+                        Website: {cardDetails.web}
+                      </Typography>
+                    ) : (
+                      ""
+                    )}
+                  </Fragment>
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={5} className="gridItem">
+                <Typography className="contactEmboss">
+                  Address:
+                  <br />
+                  {cardDetails.street} {cardDetails.houseNumber},<br />
+                  {cardDetails.city} <br />
+                  {cardDetails.country} <br />
+                  <br />
+                  {cardDetails.zipCode}
+                </Typography>
+              </Grid>
+            </Box>
+            <Grid item xs={12} sx={{ marginTop: 1 }}>
+              <Typography className="contactEmboss">
+                Created at: {formatDate(cardDetails.createdAt)}
+              </Typography>
+            </Grid>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
           <img
             src={cardDetails.url}
             alt={cardDetails.alt}
