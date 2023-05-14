@@ -52,6 +52,9 @@ const FavoritePage = () => {
   const handleCallBtnClick = () => {
     toast.success("The call function is coming soon!");
   };
+  const handleMediaClick = (id) => {
+    navigate(`/detail/${id}`);
+  };
 
   return (
     <Box>
@@ -77,6 +80,7 @@ const FavoritePage = () => {
               bizControls={userPayload.biz}
               adminControls={userPayload.isAdmin}
               currentUser={userId}
+              onMediaClick={handleMediaClick}
             />
           </Grid>
         ))}

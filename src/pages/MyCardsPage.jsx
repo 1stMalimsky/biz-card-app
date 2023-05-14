@@ -17,8 +17,6 @@ const MyCards = () => {
   const userPayload = useSelector((bigState) => bigState.authSlice.payload);
   const navigate = useNavigate();
 
-  console.log("noCards status", noCards);
-
   useLikedStatuesCheck(
     userPayload ? userPayload._id : null,
     setmyCards,

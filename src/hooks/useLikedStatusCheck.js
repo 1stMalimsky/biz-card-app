@@ -14,18 +14,16 @@ const useLikedStatuesCheck = (userId, setCardState, setLikedState, likeClicked, 
                 const userCards = cardsArr.filter((card) =>
                     card.user_id.includes(userId)
                 );
-                console.log("userCards1", userCards[0]);
+
                 if (userCards.length === 0) {
                     setNoCards(true)
-                    console.log("noCards set TRUE");
                 }
                 if (userCards.length > 0) {
                     setNoCards(false)
-                    console.log("noCards set FALSE");
                 }
                 setLikedState(likedCards);
                 setCardState(userCards);
-                console.log("userCards2", userCards);
+
             } catch (err) {
                 console.log(err);
             }
