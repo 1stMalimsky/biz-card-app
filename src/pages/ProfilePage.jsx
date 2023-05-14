@@ -110,7 +110,7 @@ const ProfilePage = () => {
         }}
       >
         <Avatar
-          sx={{ bgcolor: "secondary.main" }}
+          sx={{ bgcolor: "secondary.main", width: 100, height: 100 }}
           src={inputState.imageUrl ? inputState.imageUrl : ""}
           alt={inputState.imageAlt}
         />

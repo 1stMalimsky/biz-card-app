@@ -10,18 +10,29 @@ import AddIcon from "@mui/icons-material/Add";
 import useLikedStatuesCheck from "../hooks/useLikedStatusCheck";
 
 const MyCards = () => {
-  const [myCards, setmyCards] = useState([]);
+  const [myCards, setmyCards] = useState(null);
   const [likedCards, setLikedCards] = useState([]);
   const [likeClicked, setLikeClicked] = useState(false);
+  const [noCards, setNoCards] = useState(null);
   const userPayload = useSelector((bigState) => bigState.authSlice.payload);
   const navigate = useNavigate();
+
+  console.log("noCards status", noCards);
 
   useLikedStatuesCheck(
     userPayload ? userPayload._id : null,
     setmyCards,
     setLikedCards,
-    likeClicked
+    likeClicked,
+    setNoCards
   );
+  console.log("noCards status", noCards);
+  if (myCards == null) {
+    console.log("my cards NULL");
+    return <CircularProgress />;
+  }
+
+  //console.log("myCards not null");
 
   const handleLikeBtn = async (id) => {
     try {
@@ -49,9 +60,15 @@ const MyCards = () => {
     toast.success("The call function is coming soon!");
   };
 
-  if (userPayload == null) {
+  /*  if (myCards == null) {
+    console.log("No likedCards");
     return <CircularProgress />;
-  }
+  } */
+
+  /* if (userPayload == null) {
+    console.log("payload Null");
+    return <CircularProgress />;
+  } */
 
   return (
     <Box>
@@ -98,6 +115,16 @@ const MyCards = () => {
             </Grid>
           );
         })}
+        <Grid item xs={12}>
+          {noCards === true ? (
+            <Typography varient="h4">
+              you don't have any cards of your own yet. Click the button to add
+              a new card
+            </Typography>
+          ) : (
+            ""
+          )}
+        </Grid>
       </Grid>
     </Box>
   );

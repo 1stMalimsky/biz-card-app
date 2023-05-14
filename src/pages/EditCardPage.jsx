@@ -10,7 +10,6 @@ import Alert from "@mui/material/Alert";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
 import ROUTES from "../routes/ROUTES";
 import validateEditSchema, {
   validateEditCardParamsSchema,
@@ -18,12 +17,14 @@ import validateEditSchema, {
 import { CircularProgress } from "@mui/material";
 import atom from "../logo.svg";
 import { toast } from "react-toastify";
+import AddCardInput from "../components/AddCardInput";
+import addCardInputs from "../utils/newCardInput";
 
 const EditCardPage = () => {
   const { id } = useParams();
-  const [inputState, setInputState] = useState(null);
+  const [inputState, setInputState] = useState("");
 
-  const [inputsErrorsState, setInputsErrorsState] = useState({});
+  const [inputsErrorsState, setInputsErrorsState] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,9 +55,10 @@ const EditCardPage = () => {
         delete newInputState.user_id;
         delete newInputState.bizNumber;
         delete newInputState.createdAt;
+        delete newInputState.__v;
         setInputState(newInputState);
       } catch (err) {
-        console.log("error from axios", err);
+        console.log(err);
       }
     })();
   }, [id]);
@@ -64,20 +66,18 @@ const EditCardPage = () => {
     try {
       const joiResponse = validateEditSchema(inputState);
       setInputsErrorsState(joiResponse);
-      console.log(joiResponse);
       if (!joiResponse) {
-        //move to homepage
         await axios.put("/cards/" + id, inputState);
+        toast.success("Card Updated");
         navigate(ROUTES.HOME);
       }
     } catch (err) {
-      console.log("err", err);
-      toast.error("errrrrrrrrrrrrrrrror");
+      console.log(err);
+      toast.error("Couldn't apply changes. Please try again");
     }
   };
 
   const handleCancelBtnClick = (ev) => {
-    //move to homepage
     navigate(ROUTES.HOME);
   };
   const handleInputChange = (ev) => {
@@ -91,7 +91,7 @@ const EditCardPage = () => {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="md">
       <Box
         sx={{
           marginTop: 8,
@@ -119,120 +119,38 @@ const EditCardPage = () => {
         />
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                id="url"
-                label="Url"
-                name="url"
-                autoComplete="url"
-                value={inputState.url ? inputState.url : ""}
-                onChange={handleInputChange}
-              />
-              {inputsErrorsState && inputsErrorsState.url && (
-                <Alert severity="warning">
-                  {inputsErrorsState.url.map((item) => (
-                    <div key={"url-errors" + item}>{item}</div>
-                  ))}
-                </Alert>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="title"
-                label="Title"
-                name="title"
-                autoComplete="title"
-                value={inputState.title}
-                onChange={handleInputChange}
-              />
-              {inputsErrorsState && inputsErrorsState.title && (
-                <Alert severity="warning">
-                  {inputsErrorsState.title.map((item) => (
-                    <div key={"title-errors" + item}>{item}</div>
-                  ))}
-                </Alert>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="subTitle"
-                label="Sub title"
-                type="text"
-                id="subTitle"
-                autoComplete="subTitle"
-                value={inputState.subTitle}
-                onChange={handleInputChange}
-              />
-              {inputsErrorsState && inputsErrorsState.subTitle && (
-                <Alert severity="warning">
-                  {inputsErrorsState.subTitle.map((item) => (
-                    <div key={"subTitle-errors" + item}>{item}</div>
-                  ))}
-                </Alert>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="description"
-                label="Description"
-                id="description"
-                autoComplete="description"
-                value={inputState.description}
-                onChange={handleInputChange}
-              />
-              {inputsErrorsState && inputsErrorsState.description && (
-                <Alert severity="warning">
-                  {inputsErrorsState.description.map((item) => (
-                    <div key={"description-errors" + item}>{item}</div>
-                  ))}
-                </Alert>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="address"
-                label="Address"
-                id="address"
-                autoComplete="address"
-                value={inputState.address}
-                onChange={handleInputChange}
-              />
-              {inputsErrorsState && inputsErrorsState.description && (
-                <Alert severity="warning">
-                  {inputsErrorsState.description.map((item) => (
-                    <div key={"description-errors" + item}>{item}</div>
-                  ))}
-                </Alert>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="phone"
-                label="Phone"
-                id="phone"
-                autoComplete="phone"
-                value={inputState.phone}
-                onChange={handleInputChange}
-              />
-              {inputsErrorsState && inputsErrorsState.description && (
-                <Alert severity="warning">
-                  {inputsErrorsState.description.map((item) => (
-                    <div key={"description-errors" + item}>{item}</div>
-                  ))}
-                </Alert>
-              )}
-            </Grid>
+            {addCardInputs.map((item) => (
+              <Grid item xs={12} sm={6} key={item.inputName + "EditCardPage"}>
+                {item.stateName === "description" ? (
+                  <TextField
+                    label={item.inputName}
+                    required={true}
+                    value={inputState[item.stateName]}
+                    id={item.stateName}
+                    onChange={handleInputChange}
+                    multiline
+                    fullWidth
+                  />
+                ) : (
+                  <AddCardInput
+                    input={item.stateName}
+                    label={item.inputName}
+                    required={true}
+                    value={inputState[item.stateName]}
+                    id={item.stateName}
+                    onChange={handleInputChange}
+                  />
+                )}
+                {inputsErrorsState && inputsErrorsState[item.inputName] && (
+                  <Alert severity="warning">
+                    {inputsErrorsState[item.inputName].map((err) => (
+                      <div key={item.inputName + err}>{err}</div>
+                    ))}
+                  </Alert>
+                )}
+              </Grid>
+            ))}
+            <Grid item xs={12} sm={6}></Grid>
             <Grid item xs={6}>
               <Button
                 fullWidth
@@ -254,25 +172,6 @@ const EditCardPage = () => {
               </Button>
             </Grid>
           </Grid>
-          {/* <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={() => {
-              navigate("/edit/2");
-            }}
-          >
-            edit 2
-          </Button> */}
-          {/* <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link to={ROUTES.REGISTER}>
-                <Typography variant="body2">
-                  Did not have an account? Sign up
-                </Typography>
-              </Link>
-            </Grid>
-          </Grid> */}
         </Box>
       </Box>
     </Container>

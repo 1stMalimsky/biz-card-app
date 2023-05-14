@@ -21,7 +21,6 @@ const AddNewCardPage = () => {
   const [inputState, setInputState] = useState(
     Object.fromEntries(addCardInputs.map((item) => [item.stateName, ""]))
   );
-  //console.log(inputState);
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const [submitBtnState, setSubmitBtnState] = useState(true);
   const navigate = useNavigate();
@@ -54,11 +53,9 @@ const AddNewCardPage = () => {
       if (updatedInputState.web) {
         updatedInputState.web = `https://${updatedInputState.web}`;
       }
-      console.log(inputState.wed);
       const joiResponse = validateEditSchema(updatedInputState);
       setInputsErrorsState(joiResponse);
       if (joiResponse) {
-        console.log(joiResponse);
         return;
       }
       await axios.post("/cards/", updatedInputState);

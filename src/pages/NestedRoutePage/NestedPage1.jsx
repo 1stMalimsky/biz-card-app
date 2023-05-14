@@ -13,7 +13,6 @@ const NestedPage1 = () => {
     }, 1000);
     return () => {
       clearInterval(intervalId);
-      console.log("component terminated");
     };
   }, []);
   return (

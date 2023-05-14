@@ -24,18 +24,18 @@ const FooterComponent = () => {
     <Fragment>
       <hr />
       <Grid container display="flex" justifyContent="center">
-        <Grid item xs={4} sx={{ textAlign: "center" }}>
-          {loggedIn ? (
+        {loggedIn ? (
+          <Grid item xs={4} sx={{ textAlign: "center" }}>
             <Button
               startIcon={<FavoriteIcon />}
               onClick={() => navigate(ROUTES.FAVCARDS)}
             >
               Liked Cards
             </Button>
-          ) : (
-            ""
-          )}
-        </Grid>
+          </Grid>
+        ) : (
+          ""
+        )}
         <Grid item xs={4} sx={{ textAlign: "center" }}>
           <Button
             startIcon={<InfoIcon />}
@@ -43,20 +43,22 @@ const FooterComponent = () => {
           >
             About
           </Button>
-          <Typography variant="body1"> © Alon Malimsky 2023</Typography>
         </Grid>
-        <Grid item xs={4} sx={{ textAlign: "center" }}>
-          {loggedIn && bizState ? (
+        {loggedIn && bizState ? (
+          <Grid item xs={4} sx={{ textAlign: "center" }}>
             <Button
               startIcon={<PortraitIcon />}
               onClick={() => navigate(ROUTES.MYCARDS)}
             >
               My Cards
             </Button>
-          ) : (
-            ""
-          )}
-        </Grid>
+          </Grid>
+        ) : (
+          ""
+        )}
+      </Grid>
+      <Grid item xs={12} sx={{ textAlign: "center" }}>
+        <Typography variant="body1"> © Alon Malimsky 2023</Typography>
       </Grid>
     </Fragment>
   );

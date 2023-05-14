@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 
 const ProtectedRoute = ({ element }) => {
   const isLoggedIn = useSelector((bigState) => bigState.authSlice.isLoggedIn);
+  const token = localStorage.getItem("token");
+
   if (isLoggedIn) {
     return element;
-  } else {
+  } else if (!token && !isLoggedIn) {
     toast.error("You must be logged in to load this page");
     return <Navigate to={ROUTES.HOME} />;
   }
