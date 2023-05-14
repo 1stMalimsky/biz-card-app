@@ -26,13 +26,10 @@ const MyCards = () => {
     likeClicked,
     setNoCards
   );
-  console.log("noCards status", noCards);
+
   if (myCards == null) {
-    console.log("my cards NULL");
     return <CircularProgress />;
   }
-
-  //console.log("myCards not null");
 
   const handleLikeBtn = async (id) => {
     try {
@@ -60,16 +57,6 @@ const MyCards = () => {
     toast.success("The call function is coming soon!");
   };
 
-  /*  if (myCards == null) {
-    console.log("No likedCards");
-    return <CircularProgress />;
-  } */
-
-  /* if (userPayload == null) {
-    console.log("payload Null");
-    return <CircularProgress />;
-  } */
-
   return (
     <Box>
       <Typography variant="h2" component="h1">
@@ -89,7 +76,7 @@ const MyCards = () => {
       >
         <Typography varient="h4">ADD NEW CARD</Typography>
       </Button>
-      <Grid container>
+      <Grid container sx={{ justifyContent: "center" }}>
         {myCards.map((item) => {
           const isLiked = likedCards.some((card) => card._id === item._id);
           return (
