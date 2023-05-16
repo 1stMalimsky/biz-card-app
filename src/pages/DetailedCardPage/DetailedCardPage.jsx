@@ -113,7 +113,7 @@ const DetailedCardPage = () => {
                   {cardDetails.city} <br />
                   {cardDetails.country} <br />
                   <br />
-                  {cardDetails.zipCode}
+                  Zipcode: {cardDetails.zipCode}
                 </Typography>
               </Grid>
             </Box>
@@ -133,7 +133,7 @@ const DetailedCardPage = () => {
           <img
             src={cardDetails.url}
             alt={cardDetails.alt}
-            style={{ maxWidth: 350 }}
+            style={{ maxWidth: 300, maxHeight: 230 }}
           />
         </Grid>
       </Grid>

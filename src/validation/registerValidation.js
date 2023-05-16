@@ -7,7 +7,7 @@ const imageRegex = /.(jpg|jpeg|png|gif)$/i;
 const registerSchema = Joi.object({
   firstName: Joi.string().min(2).max(100).required(),
   lastName: Joi.string().min(2).max(100).required(),
-  middleName: Joi.string().min(0).max(100),
+  middleName: Joi.string().min(2).max(100),
   phone: Joi.number().required(),
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -22,7 +22,7 @@ const registerSchema = Joi.object({
   city: Joi.string().min(2).max(30).required(),
   street: Joi.string().min(2).max(30).required(),
   houseNumber: Joi.number().required(),
-  zipCode: Joi.number().required(),
+  zipCode: Joi.number().min(5).required(),
 });
 
 const validateRegisterSchema = (userInput) =>

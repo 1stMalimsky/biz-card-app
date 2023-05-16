@@ -54,7 +54,9 @@ const MyCards = () => {
   const handleCallBtnClick = () => {
     toast.success("The call function is coming soon!");
   };
-
+  const handleMediaClick = (id) => {
+    navigate(`/detail/${id}`);
+  };
   return (
     <Box>
       <Typography variant="h2" component="h1">
@@ -96,6 +98,7 @@ const MyCards = () => {
                 adminControls={userPayload.isAdmin}
                 currentUser={userPayload._id}
                 isLiked={isLiked}
+                onMediaClick={handleMediaClick}
               />
             </Grid>
           );

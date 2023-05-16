@@ -17,6 +17,7 @@ import ROUTES from "../../routes/ROUTES";
 import RegisterFieldComponent from "./RegisterFieldComponent";
 import registerInputs from "../../utils/registerInputs";
 import { toast } from "react-toastify";
+import "./registerPage.css";
 
 const RegisterPage = () => {
   const [inputState, setInputState] = useState(
@@ -95,9 +96,18 @@ const RegisterPage = () => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <PersonAddAltSharpIcon />
-        </Avatar>
+        {inputState.imageUrl ? (
+          <img
+            src={inputState.imageUrl}
+            alt={inputState.imageAlt}
+            className="img"
+          />
+        ) : (
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <PersonAddAltSharpIcon />
+          </Avatar>
+        )}
+
         <Typography component="h1" variant="h4">
           Register Page
         </Typography>

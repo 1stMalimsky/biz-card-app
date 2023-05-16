@@ -56,6 +56,7 @@ const AddNewCardPage = () => {
       const joiResponse = validateEditSchema(updatedInputState);
       setInputsErrorsState(joiResponse);
       if (joiResponse) {
+        console.log(joiResponse);
         return;
       }
       await axios.post("/cards/", updatedInputState);
@@ -140,10 +141,10 @@ const AddNewCardPage = () => {
                     onChange={handleInputChange}
                   />
                 )}
-                {inputsErrorsState && inputsErrorsState[item.inputName] && (
+                {inputsErrorsState && inputsErrorsState[item.stateName] && (
                   <Alert severity="warning">
-                    {inputsErrorsState[item.inputName].map((err) => (
-                      <div key={item.inputName + err}>{err}</div>
+                    {inputsErrorsState[item.stateName].map((err) => (
+                      <div key={item.stateName + err}>{err}</div>
                     ))}
                   </Alert>
                 )}

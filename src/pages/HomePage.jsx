@@ -1,4 +1,10 @@
-import { Box, CircularProgress, Grid } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Divider,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -112,6 +118,15 @@ const HomePage = () => {
 
   return (
     <Box>
+      <Typography variant="h2" component="h1">
+        Home Page
+      </Typography>
+      <Typography variant="h6">
+        Welcome! Here you can find all of the businesses that our site offers.
+        Browse freely and consider registering to get more capabilities on our
+        website.
+      </Typography>
+      <Divider></Divider>
       <Grid container>
         {cardsArr.map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={item._id + Date.now()}>

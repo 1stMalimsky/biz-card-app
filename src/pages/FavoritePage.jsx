@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import FavCardComponent from "../components/FavCardComponent";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -61,6 +61,11 @@ const FavoritePage = () => {
       <Typography variant="h2" component="h1">
         Favorite Cards
       </Typography>
+      <Typography variant="h6">
+        All the cards you've liked can be found here. You can also unlike them
+        by clicking the outlined heart icon.
+      </Typography>
+      <Divider />
       <Grid container>
         {userLikedCards.map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={item._id + Date.now()}>

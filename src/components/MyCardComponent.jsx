@@ -31,6 +31,7 @@ const MyCardComponent = ({
   currentUser,
   onLikeClick,
   isLiked,
+  onMediaClick,
 }) => {
   const handleDeleteBtnClick = () => {
     onDelete(id);
@@ -46,9 +47,13 @@ const MyCardComponent = ({
     onLikeClick(id);
   };
 
+  const handleMediaClick = () => {
+    onMediaClick(id);
+  };
+
   return (
     <Card square raised sx={{ width: 275, height: 500, mt: 2 }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleMediaClick}>
         <CardMedia
           component="img"
           image={img}
