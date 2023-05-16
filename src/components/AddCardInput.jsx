@@ -22,7 +22,7 @@ const AddCardInput = ({ input, label, required, value, onChange }) => {
 AddCardInput.propTypes = {
   input: PropTypes.string,
   label: PropTypes.string,
-  value: PropTypes.string || PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
 };
 

@@ -78,7 +78,7 @@ const ProfilePage = () => {
       await axios.put("/users/userInfo/" + inputState._id, inputSubmitState);
       toast.success("User info updated!");
     } catch (err) {
-      console.log("error from axios", err.response.data);
+      toast.error(err.response.data);
     }
   };
   const handleInputChange = (ev) => {

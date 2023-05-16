@@ -49,6 +49,9 @@ const EditCardPage = () => {
         } else {
           newInputState.alt = "";
         }
+        if (!data.web) {
+          newInputState.web = "";
+        }
         delete newInputState.image;
         delete newInputState.likes;
         delete newInputState._id;
@@ -141,10 +144,10 @@ const EditCardPage = () => {
                     onChange={handleInputChange}
                   />
                 )}
-                {inputsErrorsState && inputsErrorsState[item.inputName] && (
+                {inputsErrorsState && inputsErrorsState[item.stateName] && (
                   <Alert severity="warning">
-                    {inputsErrorsState[item.inputName].map((err) => (
-                      <div key={item.inputName + err}>{err}</div>
+                    {inputsErrorsState[item.stateName].map((err) => (
+                      <div key={item.stateName + err}>{err}</div>
                     ))}
                   </Alert>
                 )}
