@@ -48,7 +48,6 @@ const DetailedCardPage = () => {
         delete newInputState._id;
         delete newInputState.user_id;
         delete newInputState.bizNumber;
-        //delete newInputState.createdAt;
         setCardDetails(newInputState);
       } catch (err) {
         console.log("error from axios", err);
@@ -61,10 +60,8 @@ const DetailedCardPage = () => {
   }
   return (
     <Box>
-      <Fragment>
-        <Typography variant="h2">{cardDetails.title}</Typography>
-        <Divider />
-      </Fragment>
+      <Typography variant="h2">{cardDetails.title}</Typography>
+      <Divider />
       <br />
       <Grid container display="flex" className="gridContainer">
         <Grid item md={12} lg={8}>
@@ -94,16 +91,14 @@ const DetailedCardPage = () => {
                   Phone Number: {cardDetails.phone}
                   <br />
                   Email Address: {cardDetails.email} <br />
-                  <Fragment>
-                    {cardDetails && cardDetails.web ? (
-                      <Typography className="contactEmboss">
-                        Website: {cardDetails.web}
-                      </Typography>
-                    ) : (
-                      ""
-                    )}
-                  </Fragment>
                 </Typography>
+                {cardDetails && cardDetails.web ? (
+                  <Typography className="contactEmboss">
+                    Website: {cardDetails.web}
+                  </Typography>
+                ) : (
+                  ""
+                )}
               </Grid>
               <Grid item xs={12} sm={5} className="gridItem">
                 <Typography className="contactEmboss">
